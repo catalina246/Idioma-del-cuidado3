@@ -1,0 +1,3556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idioma del Cuidado - Plataforma de Apoyo Lingüístico e Intercultural</title>
+    <style>
+        :root {
+            --primary: #6b46c1;
+            --primary-light: #805ad5;
+            --primary-dark: #553c9a;
+            --bg-tint: #faf5ff;
+            --bg-tint-strong: #f3e8ff;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-dark: #1e1b4b;
+            --text-muted: #4b5563;
+            --dark-card: #1e1b4b;
+            --dark-surface: #312e81;
+            --accent-yellow: #fef3c7;
+            --accent-yellow-text: #92400e;
+            --border-color: #e9d5ff;
+            --border-neutral: #e2e8f0;
+            --success-bg: #dcfce7;
+            --success-text: #15803d;
+            --danger-bg: #fee2e2;
+            --danger-text: #b91c1c;
+            --wsp-green: #16a34a;
+            --wsp-green-dark: #15803d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header / Navbar */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(107, 70, 193, 0.06);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            cursor: pointer;
+        }
+
+        .brand-logo-svg {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+        }
+
+        .brand-text h1 {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .brand-text p {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn-nav {
+            padding: 0.5rem 1.1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            color: var(--text-dark);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:hover {
+            background: var(--bg-tint);
+            border-color: var(--primary-light);
+        }
+
+        .btn-nav.active {
+            background-color: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .btn-nav-wsp {
+            padding: 0.5rem 1.1rem;
+            border-radius: 20px;
+            border: 1px solid var(--wsp-green);
+            background: var(--wsp-green);
+            color: #fff;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.88rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .btn-nav-wsp:hover {
+            background: var(--wsp-green-dark);
+        }
+
+        /* Container & Views */
+        .container {
+            max-width: 1080px;
+            margin: 2rem auto;
+            padding: 0 1.25rem;
+        }
+
+        .page-view {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* AUTHENTICATION CARDS */
+        .auth-wrapper {
+            max-width: 540px;
+            margin: 1rem auto;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(107, 70, 193, 0.08);
+        }
+
+        .auth-wrapper.dark-theme {
+            background: var(--dark-card);
+            color: #f8fafc;
+            border-color: #4338ca;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--bg-tint);
+            border-radius: 10px;
+            padding: 0.3rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .auth-wrapper.dark-theme .auth-tabs {
+            background: var(--dark-surface);
+            border-color: #4338ca;
+        }
+
+        .auth-tab-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .auth-wrapper.dark-theme .auth-tab-btn {
+            color: #c7d2fe;
+        }
+
+        .auth-tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 6px rgba(107, 70, 193, 0.25);
+        }
+
+        .auth-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.85rem;
+        }
+
+        @media (max-width: 550px) {
+            .auth-grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .session-topbar {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .session-topbar.dark-bar {
+            background: var(--dark-surface);
+            color: #fff;
+            border-color: #4338ca;
+        }
+
+        /* PÁGINA 1: INICIO */
+        .hero {
+            text-align: center;
+            margin: 2rem 0 3rem;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 2rem;
+        }
+
+        .selection-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 2.25rem 2rem;
+            box-shadow: 0 4px 12px rgba(107, 70, 193, 0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .selection-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px rgba(107, 70, 193, 0.12);
+        }
+
+        .card-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .icon-gestante { background: #fce7f3; color: #be185d; }
+        .icon-profesional { background: #ede9fe; color: #5b21b6; }
+
+        .selection-card span.tag {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.06em;
+        }
+
+        .selection-card h3 {
+            font-size: 1.45rem;
+            margin: 0.4rem 0 0.85rem;
+        }
+
+        .selection-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .btn-action {
+            background: var(--bg-tint);
+            border: 1px solid var(--border-color);
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* PÁGINA 2: GESTANTE */
+        .country-selector {
+            background: #fff;
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .country-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .lang-badge {
+            background: var(--bg-tint-strong);
+            color: var(--primary-dark);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .flags-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .flag-btn {
+            padding: 0.45rem 0.9rem;
+            border: 1px solid var(--border-neutral);
+            border-radius: 8px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.15s ease;
+        }
+
+        .flag-btn:hover {
+            border-color: var(--primary-light);
+            background: var(--bg-tint);
+        }
+
+        .flag-btn.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Sub-tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid var(--border-neutral);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 0.95rem;
+            border: none;
+            background: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-dark);
+            border-bottom-color: var(--primary);
+            background: var(--bg-tint);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .sub-tab-panel, .prof-sub-panel {
+            display: none;
+        }
+
+        .sub-tab-panel.active, .prof-sub-panel.active {
+            display: block;
+        }
+
+        .gestante-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .gestante-grid { grid-template-columns: 1fr; }
+        }
+
+        .sidebar-card, .main-card {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+
+        .week-circle {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+            background: var(--bg-tint);
+        }
+
+        .week-circle span.num { font-size: 1.9rem; font-weight: 800; color: var(--primary-dark); line-height: 1; }
+        .week-circle span.label { font-size: 0.72rem; font-weight: 700; color: var(--primary); margin-top: 0.2rem; }
+
+        .week-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-week-step {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--primary-light);
+            background: var(--bg-tint);
+            color: var(--primary-dark);
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-week-step:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .sidebar-wsp-box {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 10px;
+            padding: 0.85rem;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .info-box {
+            background: var(--bg-tint);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .info-box strong { display: block; margin-bottom: 0.3rem; }
+
+        /* PREPARACIÓN PREVIA Y CHECKLIST AUTOMÁTICO */
+        .prep-header-bar {
+            background: var(--bg-tint);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .prep-select-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .checklist-container {
+            display: grid;
+            grid-template-columns: 1.15fr 1.05fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 780px) {
+            .checklist-container { grid-template-columns: 1fr; }
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.85rem;
+            border: 1px solid var(--border-neutral);
+            border-radius: 10px;
+            margin-bottom: 0.65rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fff;
+        }
+
+        .checklist-item:hover {
+            border-color: var(--primary-light);
+            background: var(--bg-tint);
+        }
+
+        .checklist-item.checked {
+            background: #f0fdf4;
+            border-color: #86efac;
+        }
+
+        .checklist-item.checked span.item-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 19px;
+            height: 19px;
+            margin-top: 2px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .progress-bar-wrap {
+            background: #e2e8f0;
+            border-radius: 99px;
+            height: 10px;
+            overflow: hidden;
+            margin: 0.6rem 0 1.1rem;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--primary), #10b981);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .whatsapp-preview-box {
+            background: #ecfdf5;
+            border: 2px solid #34d399;
+            border-radius: 12px;
+            padding: 1.25rem;
+            font-size: 0.88rem;
+            color: #064e3b;
+        }
+
+        .whatsapp-phone-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0 0.85rem;
+            align-items: center;
+        }
+
+        .whatsapp-phone-input-group input {
+            flex: 1;
+            padding: 0.7rem 0.9rem;
+            border-radius: 8px;
+            border: 2px solid #10b981;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #064e3b;
+            background: #fff;
+            outline: none;
+        }
+
+        .whatsapp-phone-input-group input:focus {
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+        }
+
+        .whatsapp-bubble {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.6rem 0 0.9rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            border-left: 4px solid #10b981;
+            white-space: pre-line;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .wsp-btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .btn-wsp-send {
+            width: 100%;
+            background: var(--wsp-green);
+            color: #fff;
+            border: none;
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            transition: background 0.2s;
+            box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25);
+        }
+
+        .btn-wsp-send:hover {
+            background: var(--wsp-green-dark);
+        }
+
+        .btn-wsp-copy {
+            width: 100%;
+            background: #fff;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .btn-wsp-copy:hover {
+            background: #d1fae5;
+        }
+
+        .alert-fasting {
+            background: var(--accent-yellow);
+            border: 1px solid #fcd34d;
+            color: var(--accent-yellow-text);
+            padding: 0.85rem 1rem;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            margin-bottom: 1rem;
+        }
+
+        /* FORMULARIOS Y BOTONES */
+        .form-group {
+            text-align: left;
+            margin-bottom: 0.9rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.84rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .input-light {
+            width: 100%;
+            padding: 0.65rem 0.9rem;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.92rem;
+            outline: none;
+            background: #fff;
+            color: var(--text-dark);
+        }
+
+        .input-light:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.15);
+        }
+
+        .btn-primary-full {
+            width: 100%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 0.4rem;
+        }
+
+        .btn-primary-full:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-demo {
+            width: 100%;
+            background: var(--bg-tint);
+            color: var(--primary-dark);
+            border: 1px dashed var(--primary-light);
+            padding: 0.65rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.86rem;
+            cursor: pointer;
+            margin-top: 0.65rem;
+        }
+
+        .btn-demo:hover {
+            background: var(--bg-tint-strong);
+        }
+
+        .portal-banner {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: #fff;
+            border-radius: 14px;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .portal-grid { grid-template-columns: 1fr; }
+        }
+
+        .doc-item {
+            border: 1px solid var(--border-neutral);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            background: #fff;
+            transition: border-color 0.2s;
+        }
+
+        .doc-item:hover {
+            border-color: var(--primary-light);
+        }
+
+        .doc-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.15rem 0.55rem;
+            border-radius: 6px;
+            margin-bottom: 0.3rem;
+        }
+
+        .tag-exam { background: #e0f2fe; color: #0369a1; }
+        .tag-rx { background: #dcfce7; color: #15803d; }
+        .tag-cert { background: #f3e8ff; color: #6b21a8; }
+
+        .btn-sm {
+            padding: 0.45rem 0.85rem;
+            border-radius: 7px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--primary);
+            background: var(--primary);
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .btn-sm:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-sm-outline {
+            padding: 0.45rem 0.85rem;
+            border-radius: 7px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--primary);
+            background: #fff;
+            color: var(--primary-dark);
+            white-space: nowrap;
+        }
+
+        .btn-sm-outline:hover {
+            background: var(--bg-tint);
+        }
+
+        /* Diccionario */
+        .dict-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            background: var(--bg-tint);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .dict-filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .dict-chip {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .dict-chip.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .dict-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.85rem;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 1.5fr;
+            gap: 1rem;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+
+        .dict-card:hover {
+            border-color: var(--primary-light);
+        }
+
+        .origin-pill {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            background: var(--bg-tint-strong);
+            color: var(--primary-dark);
+            padding: 0.15rem 0.55rem;
+            border-radius: 6px;
+            margin-bottom: 0.3rem;
+        }
+
+        @media (max-width: 700px) {
+            .dict-card { grid-template-columns: 1fr; }
+        }
+
+        /* PÁGINA 3: PROFESIONAL */
+        .prof-mode-switcher {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .prof-mode-btn {
+            flex: 1;
+            min-width: 220px;
+            padding: 0.85rem 1.25rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background: #fff;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .prof-mode-btn:hover {
+            border-color: var(--primary-light);
+            background: var(--bg-tint);
+        }
+
+        .prof-mode-btn.active {
+            background: var(--dark-card);
+            color: #fff;
+            border-color: var(--dark-card);
+            box-shadow: 0 4px 12px rgba(30, 27, 75, 0.2);
+        }
+
+        .prof-search-container {
+            background: var(--dark-card);
+            color: #f8fafc;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-inputs {
+            display: grid;
+            grid-template-columns: 1fr 2fr auto;
+            gap: 1rem;
+        }
+
+        @media (max-width: 650px) {
+            .search-inputs { grid-template-columns: 1fr; }
+        }
+
+        .form-control-dark {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #4338ca;
+            background: var(--dark-surface);
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        .btn-submit {
+            background: var(--primary-light);
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .quick-terms-bar {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .quick-term-chip {
+            background: rgba(255, 255, 255, 0.12);
+            color: #e0e7ff;
+            border: 1px solid rgba(196, 181, 253, 0.35);
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .quick-term-chip:hover, .quick-term-chip.active {
+            background: var(--primary-light);
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .result-card {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .result-header {
+            background: var(--dark-surface);
+            color: #fff;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .result-body {
+            padding: 1.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .alert-box {
+            background: var(--accent-yellow);
+            color: var(--accent-yellow-text);
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            font-size: 0.94rem;
+        }
+
+        .visual-support {
+            background: var(--bg-tint);
+            border: 1px dashed var(--primary-light);
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .teach-back-box {
+            background: #f5f3ff;
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.25rem;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .teach-back-box ul {
+            margin-left: 1.25rem;
+            margin-top: 0.5rem;
+            font-size: 0.92rem;
+        }
+
+        /* FICHA CLÍNICA ELECTRÓNICA (FCE) ÁGIL */
+        .ehr-patient-banner {
+            background: var(--dark-card);
+            color: #fff;
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .ehr-vitals-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .vital-pill {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.75rem 0.9rem;
+            text-align: center;
+        }
+
+        .vital-pill span.v-lbl {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .vital-pill strong {
+            font-size: 1.05rem;
+            color: var(--primary-dark);
+        }
+
+        .ehr-layout {
+            display: grid;
+            grid-template-columns: 310px 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 820px) {
+            .ehr-layout { grid-template-columns: 1fr; }
+        }
+
+        .ehr-section-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.65rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.35rem;
+        }
+
+        .ehr-alert-tag {
+            display: inline-block;
+            background: var(--danger-bg);
+            color: var(--danger-text);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            margin: 0.2rem 0.2rem 0.2rem 0;
+        }
+
+        .ehr-ok-tag {
+            display: inline-block;
+            background: var(--success-bg);
+            color: var(--success-text);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            margin: 0.2rem 0.2rem 0.2rem 0;
+        }
+
+        .template-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-bottom: 1rem;
+        }
+
+        .tpl-chip {
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-tint);
+            color: var(--primary-dark);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .tpl-chip:hover, .tpl-chip.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .ehr-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .timeline-entry {
+            border-left: 3px solid var(--primary-light);
+            padding-left: 1rem;
+            margin-bottom: 1.1rem;
+            position: relative;
+        }
+
+        .timeline-entry::before {
+            content: "";
+            width: 11px;
+            height: 11px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: absolute;
+            left: -7px;
+            top: 4px;
+        }
+
+        /* Modal Genérico */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(30, 27, 75, 0.65);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #fff;
+            max-width: 560px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 1.75rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado Superior -->
+    <header>
+        <div class="brand" onclick="switchView('inicio')">
+            <svg class="brand-logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="92" fill="#faf5ff" stroke="#805ad5" stroke-width="5"/>
+                <ellipse cx="78" cy="52" rx="22" ry="16" fill="#6b46c1"/>
+                <circle cx="78" cy="52" r="9" fill="none" stroke="#fff" stroke-width="1.8"/>
+                <line x1="69" y1="52" x2="87" y2="52" stroke="#fff" stroke-width="1.5"/>
+                <line x1="78" y1="43" x2="78" y2="61" stroke="#fff" stroke-width="1.5"/>
+                <ellipse cx="122" cy="56" rx="20" ry="15" fill="#b794f4"/>
+                <text x="122" y="61" font-size="13" font-weight="bold" fill="#fff" text-anchor="middle">文A</text>
+                <circle cx="66" cy="95" r="15" fill="#d69e7e"/>
+                <path d="M51 95 C48 78, 78 75, 81 92 C72 88, 58 88, 51 95 Z" fill="#3b2314"/>
+                <path d="M46 145 C46 118, 86 118, 92 145 Z" fill="#f472b6"/>
+                <circle cx="134" cy="95" r="15" fill="#f6d5c1"/>
+                <circle cx="144" cy="80" r="8" fill="#553c2e"/>
+                <path d="M119 92 C120 77, 148 77, 149 92 Z" fill="#553c2e"/>
+                <path d="M112 145 C115 118, 155 118, 158 145 Z" fill="#ffffff" stroke="#805ad5" stroke-width="2"/>
+                <rect x="26" y="132" width="148" height="44" rx="20" fill="#f3e8ff" stroke="#6b46c1" stroke-width="3"/>
+                <text x="100" y="152" font-size="16" font-weight="900" fill="#553c9a" text-anchor="middle">Idioma del</text>
+                <text x="100" y="169" font-size="18" font-weight="900" fill="#553c9a" text-anchor="middle">Cuidado</text>
+            </svg>
+            <div class="brand-text">
+                <h1>Idioma del Cuidado</h1>
+                <p>Conectando lenguajes, cuidando vidas</p>
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button id="nav-btn-inicio" class="btn-nav active" onclick="switchView('inicio')">Inicio</button>
+            <button id="nav-btn-gestante" class="btn-nav" onclick="switchView('gestante')">Perfil Gestante</button>
+            <button id="nav-btn-profesional" class="btn-nav" onclick="switchView('profesional')">Perfil Profesional</button>
+            <button class="btn-nav-wsp" onclick="openClinicianPrepModal()">📲 Enviar WSP</button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- PÁGINA 1: INICIO -->
+        <section id="view-inicio" class="page-view active">
+            <div class="hero">
+                <h2>Facilitando el cuidado y la comunicación obstétrica</h2>
+                <p>Una plataforma digital multilingüe e intercultural para conectar las expresiones de gestantes migrantes con el sistema de salud en Chile.</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="selection-card">
+                    <div>
+                        <div class="card-icon icon-gestante">🤰</div>
+                        <span class="tag">PERFIL 1</span>
+                        <h3>Soy Gestante</h3>
+                        <p>Registra tu número de WhatsApp, país y semanas de embarazo para recibir tus recordatorios de citas y órdenes según tu etapa.</p>
+                    </div>
+                    <button class="btn-action" onclick="switchView('gestante')">Ingresar a mi espacio &rarr;</button>
+                </div>
+
+                <div class="selection-card">
+                    <div>
+                        <div class="card-icon icon-profesional">🩺</div>
+                        <span class="tag">PERFIL 2</span>
+                        <h3>Soy Profesional de Salud</h3>
+                        <p>Accede a la Ficha Clínica Electrónica (FCE) ágil, firma evoluciones y envía recordatorios y checklists directo al WhatsApp de la paciente.</p>
+                    </div>
+                    <button class="btn-action" onclick="switchView('profesional')">Ingresar al panel clínico &rarr;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA 2: ESPACIO DE LA GESTANTE -->
+        <section id="view-gestante" class="page-view">
+
+            <!-- PANTALLA DE LOGIN / REGISTRO GESTANTE -->
+            <div id="gestante-auth-screen" class="auth-wrapper">
+                <div style="text-align: center; margin-bottom: 1.25rem;">
+                    <div style="font-size: 2.2rem; margin-bottom: 0.3rem;">🤰💜</div>
+                    <h3 style="color: var(--primary-dark); font-size: 1.35rem;">Acceso Espacio de la Gestante</h3>
+                    <p style="font-size: 0.86rem; color: var(--text-muted);">Guarda tus datos y número de WhatsApp una sola vez para recibir tus recordatorios.</p>
+                </div>
+
+                <div class="auth-tabs">
+                    <button type="button" id="g-tab-login" class="auth-tab-btn active" onclick="switchGestanteAuthTab('login')">Iniciar Sesión</button>
+                    <button type="button" id="g-tab-register" class="auth-tab-btn" onclick="switchGestanteAuthTab('register')">Crear mi Usuario</button>
+                </div>
+
+                <!-- Formulario Login Gestante -->
+                <form id="gestante-login-form" onsubmit="loginGestante(event)">
+                    <div class="form-group">
+                        <label>Usuario (RUT, NIP, Pasaporte o Correo)</label>
+                        <input type="text" id="g-login-user" class="input-light" placeholder="Ej: 26.458.910-K" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="g-login-pass" class="input-light" placeholder="••••••••" required>
+                    </div>
+                    <p id="g-login-error" style="color: var(--danger-text); font-size: 0.83rem; margin-bottom: 0.6rem; display: none;"></p>
+                    <button type="submit" class="btn-primary-full">Ingresar a mi Embarazo &rarr;</button>
+                    <button type="button" class="btn-demo" onclick="demoGestanteLogin()">✨ Ingresar con Usuario Demo (Camila Mendoza)</button>
+                </form>
+
+                <!-- Formulario Registro Gestante -->
+                <form id="gestante-register-form" style="display: none;" onsubmit="registerGestante(event)">
+                    <div class="form-group">
+                        <label>Nombre y Apellido</label>
+                        <input type="text" id="g-reg-name" class="input-light" placeholder="Ej: María Fernanda Rojas" required>
+                    </div>
+                    <div class="auth-grid-2">
+                        <div class="form-group">
+                            <label>Usuario (RUT, NIP o Pasaporte)</label>
+                            <input type="text" id="g-reg-user" class="input-light" placeholder="Ej: 27.123.456-7" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="g-reg-pass" class="input-light" placeholder="Crea una clave" required>
+                        </div>
+                    </div>
+                    <div class="auth-grid-2">
+                        <div class="form-group">
+                            <label>📱 Número de WhatsApp</label>
+                            <input type="tel" id="g-reg-phone" class="input-light" placeholder="Ej: +56 9 8765 4321" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Semanas de Embarazo Actuales</label>
+                            <input type="number" id="g-reg-weeks" class="input-light" min="1" max="42" value="24" required>
+                        </div>
+                    </div>
+                    <div class="auth-grid-2">
+                        <div class="form-group">
+                            <label>País de Origen</label>
+                            <select id="g-reg-country" class="input-light">
+                                <option value="VE">🇻🇪 Venezuela</option>
+                                <option value="HT">🇭🇹 Haití (Kreyòl)</option>
+                                <option value="CO">🇨🇴 Colombia</option>
+                                <option value="PE">🇵🇪 Perú</option>
+                                <option value="BO">🇧🇴 Bolivia</option>
+                                <option value="EC">🇪🇨 Ecuador</option>
+                                <option value="DO">🇩🇴 Rep. Dominicana</option>
+                                <option value="EN">🌐 Otro país (English)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Grupo Sanguíneo y Rh</label>
+                            <select id="g-reg-rh" class="input-light">
+                                <option value="O (+)">O (+)</option>
+                                <option value="O (-)">O (-)</option>
+                                <option value="A (+)">A (+)</option>
+                                <option value="A (-)">A (-)</option>
+                                <option value="B (+)">B (+)</option>
+                                <option value="AB (+)">AB (+)</option>
+                                <option value="Por confirmar">Aún no lo sé</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>CESFAM / Consultorio</label>
+                        <input type="text" id="g-reg-cesfam" class="input-light" placeholder="Ej: CESFAM Dr. Alberto Hurtado" value="CESFAM Dr. Alberto Hurtado">
+                    </div>
+                    <button type="submit" class="btn-primary-full">Guardar mis Datos y Crear Cuenta ✅</button>
+                </form>
+            </div>
+
+            <!-- CONTENIDO PRIVADO DE LA GESTANTE -->
+            <div id="gestante-app-screen" style="display: none;">
+                <!-- Barra de Sesión Activa -->
+                <div class="session-topbar">
+                    <div>
+                        <span style="font-size: 0.78rem; color: var(--primary); font-weight: 700;">SESIÓN ACTIVA • DATOS GUARDADOS</span>
+                        <p style="font-size: 0.95rem; font-weight: 700;">👋 Hola, <span id="g-session-name">Camila Mendoza</span> <span style="font-weight: 400; font-size: 0.85rem; color: var(--text-muted);">(<span id="g-session-id">26.458.910-K</span> • 📱 <span id="g-session-phone">+56 9 8765 4321</span>)</span></p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn-sm-outline" onclick="openEditGestanteModal()">✏️ Editar mis datos / teléfono</button>
+                        <button class="btn-nav" onclick="logoutGestante()">Cerrar sesión 🔒</button>
+                    </div>
+                </div>
+
+                <!-- Selector de País e Idioma -->
+                <div class="country-selector">
+                    <div class="country-header">
+                        <span id="txt-select-country" style="font-size: 0.92rem; font-weight: 700;">
+                            📍 Selecciona tu país de origen para adaptar los términos e idioma:
+                        </span>
+                        <span id="active-lang-badge" class="lang-badge">Idioma: Español 🇻🇪</span>
+                    </div>
+                    <div class="flags-grid">
+                        <button class="flag-btn active" data-code="VE" onclick="selectCountry('VE', 'es', 'Español 🇻🇪', this)">🇻🇪 Venezuela</button>
+                        <button class="flag-btn" data-code="HT" onclick="selectCountry('HT', 'ht', 'Kreyòl Ayisyen 🇭🇹', this)">🇭🇹 Haití</button>
+                        <button class="flag-btn" data-code="CO" onclick="selectCountry('CO', 'es', 'Español 🇨🇴', this)">🇨🇴 Colombia</button>
+                        <button class="flag-btn" data-code="PE" onclick="selectCountry('PE', 'es', 'Español 🇵🇪', this)">🇵🇪 Perú</button>
+                        <button class="flag-btn" data-code="BO" onclick="selectCountry('BO', 'es', 'Español 🇧🇴', this)">🇧🇴 Bolivia</button>
+                        <button class="flag-btn" data-code="EC" onclick="selectCountry('EC', 'es', 'Español 🇪🇨', this)">🇪🇨 Ecuador</button>
+                        <button class="flag-btn" data-code="DO" onclick="selectCountry('DO', 'es', 'Español 🇩🇴', this)">🇩🇴 Rep. Dom.</button>
+                        <button class="flag-btn" data-code="EN" onclick="selectCountry('EN', 'en', 'English 🌐', this)">🌐 Otro país (English)</button>
+                    </div>
+                </div>
+
+                <!-- Pestañas Internas del Espacio Gestante -->
+                <div class="tabs">
+                    <button id="tab-btn-embarazo" class="tab-btn active" onclick="switchGestanteTab('embarazo')">🌱 Mi Embarazo</button>
+                    <button id="tab-btn-preparacion" class="tab-btn" onclick="switchGestanteTab('preparacion')">✅ Preparación Cita y WSP</button>
+                    <button id="tab-btn-portal" class="tab-btn" onclick="switchGestanteTab('portal')">📄 Mis Exámenes y Recetas</button>
+                    <button id="tab-btn-diccionario" class="tab-btn" onclick="switchGestanteTab('diccionario')">📖 Diccionario</button>
+                    <button id="tab-btn-sistema" class="tab-btn" onclick="switchGestanteTab('sistema')">🏥 Sistema Chileno</button>
+                </div>
+
+                <!-- SUB-TAB 1: MI EMBARAZO -->
+                <div id="panel-embarazo" class="sub-tab-panel active">
+                    <div class="gestante-grid">
+                        <div class="sidebar-card" style="text-align: center;">
+                            <div class="week-circle">
+                                <span id="g-display-weeks" class="num">24</span>
+                                <span id="txt-week-label" class="label">SEMANA</span>
+                            </div>
+
+                            <div class="week-stepper" title="Ajustar semana de embarazo">
+                                <button type="button" class="btn-week-step" onclick="changeGestationalWeek(-1)">−</button>
+                                <span style="font-size: 0.78rem; font-weight: 700; color: var(--primary-dark);">Ajustar semana</span>
+                                <button type="button" class="btn-week-step" onclick="changeGestationalWeek(1)">+</button>
+                            </div>
+
+                            <p id="txt-trimester" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">2do Trimestre</p>
+                            <hr style="margin: 1rem 0; border: 0; border-top: 1px solid var(--border-color);">
+                            <p id="txt-baby-size" style="font-size: 0.85rem; text-align: left;"></p>
+                            <p id="txt-next-checkup" style="font-size: 0.85rem; text-align: left; margin-top: 0.5rem;"><strong>Centro de Salud:</strong> <span id="g-display-cesfam">CESFAM Dr. Alberto Hurtado</span></p>
+
+                            <!-- Espacio rápido de WhatsApp en tarjeta lateral -->
+                            <div class="sidebar-wsp-box">
+                                <label style="font-size: 0.76rem; font-weight: 700; color: #065f46; display: block; margin-bottom: 0.3rem;">📱 Mi WhatsApp para avisos:</label>
+                                <input type="tel" id="sidebar-wsp-phone" class="input-light" style="padding: 0.45rem 0.65rem; font-size: 0.88rem; font-weight: 700; border-color: #34d399;" placeholder="+56 9 8765 4321" oninput="syncPhoneInputs(this.value)">
+                                <button type="button" class="btn-wsp-send" style="margin-top: 0.5rem; padding: 0.55rem 0.75rem; font-size: 0.83rem;" onclick="sendDirectWhatsApp()">
+                                    📲 Enviar guía a mi WSP
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="main-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                                <h3 id="txt-week-title" style="color: var(--primary-dark);">🌱 Seguimiento de tu semana 24</h3>
+                                <span id="txt-fetal-badge" style="font-size: 0.75rem; background: var(--bg-tint-strong); color: var(--primary-dark); padding: 0.25rem 0.7rem; border-radius: 12px; font-weight: 700;">Desarrollo fetal</span>
+                            </div>
+                            
+                            <p id="txt-week-desc" style="font-size: 0.95rem; color: var(--text-dark);"></p>
+
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.25rem;">
+                                <div class="info-box">
+                                    <strong id="txt-selfcare-title" style="color: #d97706;">💡 Autocuidado sugerido:</strong>
+                                    <span id="txt-selfcare-desc"></span>
+                                </div>
+                                <div class="info-box">
+                                    <strong id="txt-exam-title" style="color: #0284c7;">🩺 Examen clave en Chile (esta etapa):</strong>
+                                    <span id="txt-exam-desc"></span>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 1.5rem;">
+                                <h4 id="txt-notes-title" style="font-size: 1rem; margin-bottom: 0.65rem;">📋 Controles y beneficios vigentes según tu semana</h4>
+                                <div style="background: #f8fafc; border: 1px solid var(--border-neutral); border-radius: 8px; padding: 0.75rem 1rem; display: flex; justify-content: space-between; font-size: 0.9rem; flex-wrap: wrap; gap: 0.5rem;">
+                                    <span id="txt-control-matrona">🔹 Control prenatal con Matrona</span>
+                                    <strong id="txt-control-freq">Cada 4 semanas</strong>
+                                </div>
+                                <div style="background: #f8fafc; border: 1px solid var(--border-neutral); border-radius: 8px; padding: 0.75rem 1rem; display: flex; justify-content: space-between; font-size: 0.9rem; margin-top: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                                    <span id="txt-pnac">💊 Retiro de Vitaminas / Hierro y Leche (PNAC)</span>
+                                    <span id="txt-pnac-status" style="color: var(--primary-dark); font-weight: 700;">Disponible en policlínico</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 2: PREPARACIÓN PREVIA Y ENVÍO WHATSAPP -->
+                <div id="panel-preparacion" class="sub-tab-panel">
+                    <div class="prep-header-bar">
+                        <div class="prep-select-group">
+                            <label id="txt-prep-select-lbl" style="font-size: 0.88rem; font-weight: 700; color: var(--primary-dark);">
+                                📅 Selecciona tu cita agendada para ver tu guía y checklist automático:
+                            </label>
+                            <select id="appointment-type-select" class="input-light" onchange="renderPreparationGuide()">
+                                <option value="primera_cita">🤰 Control Prenatal con Matrona (24 Nov - 10:00 hrs)</option>
+                                <option value="ptgo_glucosa">🧪 Examen Prueba Tolerancia a la Glucosa - PTGO (24-28 sem • Ayuno obligatorio)</option>
+                                <option value="ecografia">🖥️ Ecografía Obstétrica / Morfológica / Crecimiento</option>
+                                <option value="laboratorio">🩸 Exámenes de Sangre y Orina / Cultivo SGB</option>
+                            </select>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="display: block; font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Estado de envío</span>
+                            <span style="display: inline-block; background: var(--success-bg); color: var(--success-text); font-size: 0.8rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 20px; margin-top: 0.2rem;">
+                                📲 Listo para enviar por WhatsApp
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="checklist-container">
+                        <div class="main-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                                <h3 id="prep-guide-title" style="color: var(--primary-dark); font-size: 1.15rem;">¿Qué debes traer a tu primera cita?</h3>
+                                <span id="checklist-counter" style="font-size: 0.82rem; font-weight: 700; color: var(--primary);">0/5 listos</span>
+                            </div>
+
+                            <div class="progress-bar-wrap">
+                                <div id="checklist-progress-bar" class="progress-bar-fill"></div>
+                            </div>
+
+                            <div id="prep-alert-box" class="alert-fasting"></div>
+
+                            <div id="checklist-items-list"></div>
+                        </div>
+
+                        <div class="main-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <h4 id="txt-auto-msg-title" style="color: var(--primary-dark); margin-bottom: 0.35rem;">📲 Enviar Recordatorio por WhatsApp</h4>
+                                <p id="txt-auto-msg-sub" style="font-size: 0.84rem; color: var(--text-muted);">
+                                    Coloca el número de teléfono con código de país y presiona enviar para abrir WhatsApp con el mensaje listo.
+                                </p>
+
+                                <div class="whatsapp-preview-box" style="margin-top: 0.9rem;">
+                                    <label for="wsp-target-phone" style="font-size: 0.84rem; font-weight: 800; color: #065f46; display: block;">
+                                        📱 Número de teléfono WhatsApp (Ej: +56 9 8765 4321):
+                                    </label>
+                                    <div class="whatsapp-phone-input-group">
+                                        <input type="tel" id="wsp-target-phone" placeholder="+56 9 8765 4321" oninput="syncPhoneInputs(this.value)">
+                                    </div>
+
+                                    <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 0.8rem;">
+                                        <span>💬 Mensaje que se enviará:</span>
+                                        <span>CESFAM • Idioma del Cuidado</span>
+                                    </div>
+                                    <div id="whatsapp-message-text" class="whatsapp-bubble"></div>
+
+                                    <div class="wsp-btn-group">
+                                        <button id="btn-send-wsp-direct" class="btn-wsp-send" onclick="sendDirectWhatsApp()">
+                                            📲 Enviar ahora por WhatsApp
+                                        </button>
+                                        <button id="btn-copy-reminder" class="btn-wsp-copy" onclick="copyReminderMessage()">
+                                            📋 Copiar texto del mensaje
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="info-box" style="margin-top: 1rem;">
+                                <strong id="txt-tip-reagendar" style="color: var(--primary-dark);">⏰ ¿No puedes asistir?</strong>
+                                <span id="txt-tip-reagendar-desc" style="font-size: 0.84rem;">Avísanos con al menos 24 horas de anticipación para reasignar tu hora y darte un nuevo cupo sin perder tus controles.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 3: MIS EXÁMENES Y RECETAS -->
+                <div id="panel-portal" class="sub-tab-panel">
+                    <div class="portal-banner">
+                        <div>
+                            <span id="portal-cesfam-label" style="font-size: 0.78rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.05em;">CESFAM Dr. Alberto Hurtado • Ficha Protegida</span>
+                            <h3 id="txt-welcome-patient" style="font-size: 1.35rem; margin-top: 0.15rem;">Bienvenida, Camila Mendoza</h3>
+                            <p id="portal-patient-meta" style="font-size: 0.85rem; opacity: 0.9;">EG: 24 Semanas • Grupo Rh: O (+) • Previsión: FONASA B</p>
+                        </div>
+                        <span style="background: rgba(255,255,255,0.2); padding: 0.4rem 0.85rem; border-radius: 20px; font-size: 0.82rem; font-weight: 700;">🔓 Acceso Verificado</span>
+                    </div>
+
+                    <div class="portal-grid">
+                        <div class="main-card">
+                            <h4 id="txt-docs-heading" style="margin-bottom: 0.3rem; color: var(--primary-dark);">📄 Órdenes y Documentos para tu Semana Actual</h4>
+                            <p id="txt-docs-sub" style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 1.1rem;">Órdenes vigentes ajustadas automáticamente a tu edad gestacional.</p>
+
+                            <div id="dynamic-docs-list"></div>
+                        </div>
+
+                        <div class="main-card">
+                            <h4 id="txt-history-heading" style="margin-bottom: 0.3rem; color: var(--primary-dark);">🩺 Resumen de Atenciones Anteriores</h4>
+                            <p id="txt-history-sub" style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 1.1rem;">Consulta lo conversado e indicado en cada control prenatal.</p>
+
+                            <div class="doc-item">
+                                <div>
+                                    <span style="font-size: 0.78rem; font-weight: 700; color: var(--primary);">Control Prenatal Reciente</span>
+                                    <h5 style="font-size: 0.95rem;">Control Prenatal con Matrona</h5>
+                                    <p style="font-size: 0.82rem; color: var(--text-muted);">Mat. Javiera Soto • LCF: 148 lpm • PA: 110/70 mmHg</p>
+                                </div>
+                                <button class="btn-sm-outline" onclick="openVisitSummary(1)">Ver resumen</button>
+                            </div>
+
+                            <div class="doc-item">
+                                <div>
+                                    <span style="font-size: 0.78rem; font-weight: 700; color: var(--primary);">Evaluación Ecográfica</span>
+                                    <h5 style="font-size: 0.95rem;">Ecografía Obstétrica de Control</h5>
+                                    <p style="font-size: 0.82rem; color: var(--text-muted);">Hospital Base • Anatomía fetal normal, placenta anterior</p>
+                                </div>
+                                <button class="btn-sm-outline" onclick="openVisitSummary(2)">Ver resumen</button>
+                            </div>
+
+                            <div class="doc-item">
+                                <div>
+                                    <span style="font-size: 0.78rem; font-weight: 700; color: var(--primary);">Nutrición y Beneficios</span>
+                                    <h5 style="font-size: 0.95rem;">Control Nutricional y Talleres Chile Crece</h5>
+                                    <p style="font-size: 0.82rem; color: var(--text-muted);">Nut. Carolina Pérez • Entrega de Purita Mamá</p>
+                                </div>
+                                <button class="btn-sm-outline" onclick="openVisitSummary(3)">Ver resumen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 4: DICCIONARIO OBSTÉTRICO AMPLIADO -->
+                <div id="panel-diccionario" class="sub-tab-panel">
+                    <div class="main-card">
+                        <h3 style="margin-bottom: 0.4rem; color: var(--primary-dark);">📖 Así se dice en mi país / Así se dice en Chile</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Equivalencias culturales y lingüísticas de términos frecuentes durante el embarazo, parto y puerperio.</p>
+
+                        <div class="dict-toolbar">
+                            <div class="dict-filter-chips" id="dict-country-chips">
+                                <button class="dict-chip active" onclick="filterDictionary('ALL', this)">🌎 Todos los países</button>
+                                <button class="dict-chip" onclick="filterDictionary('VE', this)">🇻🇪 Venezuela</button>
+                                <button class="dict-chip" onclick="filterDictionary('HT', this)">🇭🇹 Haití</button>
+                                <button class="dict-chip" onclick="filterDictionary('CO', this)">🇨🇴 Colombia</button>
+                                <button class="dict-chip" onclick="filterDictionary('PE', this)">🇵🇪 Perú</button>
+                                <button class="dict-chip" onclick="filterDictionary('BO', this)">🇧🇴 Bolivia</button>
+                                <button class="dict-chip" onclick="filterDictionary('EC', this)">🇪🇨 Ecuador</button>
+                                <button class="dict-chip" onclick="filterDictionary('DO', this)">🇩🇴 Rep. Dom.</button>
+                                <button class="dict-chip" onclick="filterDictionary('EN', this)">🌐 English</button>
+                            </div>
+                            <div style="min-width: 230px; flex: 1; max-width: 300px;">
+                                <input type="text" id="dict-search-input" class="input-light" placeholder="🔍 Buscar palabra o síntoma..." oninput="renderDictionary()">
+                            </div>
+                        </div>
+
+                        <div id="dictionary-list-container"></div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 5: SISTEMA DE SALUD CHILENO -->
+                <div id="panel-sistema" class="sub-tab-panel">
+                    <div class="main-card">
+                        <h3 style="margin-bottom: 1rem; color: var(--primary-dark);">🏥 ¿Cómo funciona la atención del embarazo en Chile?</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+                            <div class="info-box">
+                                <strong style="color: var(--primary-dark);">1. CESFAM (Consultorio)</strong>
+                                Es el Centro de Salud Familiar de tu barrio. Aquí realizas todos tus controles prenatales gratuitos con la matrona, exámenes de sangre y retiro de leche y vitaminas.
+                            </div>
+                            <div class="info-box">
+                                <strong style="color: var(--primary-dark);">2. Matrona / Matrón</strong>
+                                Es el/la profesional especialista en Chile encargado(a) de controlar tu embarazo normal, atender el parto y cuidar al recién nacido.
+                            </div>
+                            <div class="info-box">
+                                <strong style="color: var(--primary-dark);">3. Urgencia Maternal (Hospital)</strong>
+                                Si tienes sangrado, dolor abdominal fuerte, pérdida de líquido o el bebé no se mueve, debes ir directo a la Urgencia de Maternidad del Hospital público más cercano, sin importar tu situación migratoria.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA 3: PANEL CLÍNICO PARA PROFESIONALES -->
+        <section id="view-profesional" class="page-view">
+
+            <!-- PANTALLA DE LOGIN / REGISTRO PROFESIONAL -->
+            <div id="prof-auth-screen" class="auth-wrapper dark-theme">
+                <div style="text-align: center; margin-bottom: 1.25rem;">
+                    <div style="font-size: 2.2rem; margin-bottom: 0.3rem;">🩺🔐</div>
+                    <h3 style="color: #fff; font-size: 1.35rem;">Acceso Equipo Clínico y Salud</h3>
+                    <p style="font-size: 0.86rem; color: #c7d2fe;">Crea tu perfil profesional una sola vez para firmar evoluciones clínicas automáticamente y enviar recordatorios por WhatsApp.</p>
+                </div>
+
+                <div class="auth-tabs">
+                    <button type="button" id="p-tab-login" class="auth-tab-btn active" onclick="switchProfAuthTab('login')">Iniciar Sesión</button>
+                    <button type="button" id="p-tab-register" class="auth-tab-btn" onclick="switchProfAuthTab('register')">Crear Cuenta Profesional</button>
+                </div>
+
+                <!-- Formulario Login Profesional -->
+                <form id="prof-login-form" onsubmit="loginProfesional(event)">
+                    <div class="form-group">
+                        <label style="color: #e0e7ff;">Usuario (RUT Profesional o Correo Institucional)</label>
+                        <input type="text" id="p-login-user" class="form-control-dark" placeholder="Ej: 17.890.234-5" required>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #e0e7ff;">Contraseña</label>
+                        <input type="password" id="p-login-pass" class="form-control-dark" placeholder="••••••••" required>
+                    </div>
+                    <p id="p-login-error" style="color: #fca5a5; font-size: 0.83rem; margin-bottom: 0.6rem; display: none;"></p>
+                    <button type="submit" class="btn-primary-full" style="background: var(--primary-light);">Ingresar al Panel Clínico &rarr;</button>
+                    <button type="button" class="btn-demo" style="background: rgba(255,255,255,0.1); color: #e0e7ff; border-color: #818cf8;" onclick="demoProfLogin()">✨ Ingresar con Cuenta Demo (Mat. Javiera Soto)</button>
+                </form>
+
+                <!-- Formulario Registro Profesional -->
+                <form id="prof-register-form" style="display: none;" onsubmit="registerProfesional(event)">
+                    <div class="form-group">
+                        <label style="color: #e0e7ff;">Nombre Completo (con título abreviado)</label>
+                        <input type="text" id="p-reg-name" class="form-control-dark" placeholder="Ej: Mat. Catalina Herrera" required>
+                    </div>
+                    <div class="auth-grid-2">
+                        <div class="form-group">
+                            <label style="color: #e0e7ff;">Usuario (RUT o Correo)</label>
+                            <input type="text" id="p-reg-user" class="form-control-dark" placeholder="Ej: 18.456.789-0" required>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #e0e7ff;">Contraseña</label>
+                            <input type="password" id="p-reg-pass" class="form-control-dark" placeholder="Crea una clave" required>
+                        </div>
+                    </div>
+                    <div class="auth-grid-2">
+                        <div class="form-group">
+                            <label style="color: #e0e7ff;">Estamento / Especialidad</label>
+                            <select id="p-reg-role" class="form-control-dark">
+                                <option value="Matrona / Matrón">Matrona / Matrón</option>
+                                <option value="Médico Obstetra / Ginecólogo">Médico Obstetra / Ginecólogo</option>
+                                <option value="Médico General / APS">Médico General / APS</option>
+                                <option value="Nutricionista">Nutricionista</option>
+                                <option value="TENS / Enfermería">TENS / Enfermería</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #e0e7ff;">N° Registro SIS (Opcional)</label>
+                            <input type="text" id="p-reg-sis" class="form-control-dark" placeholder="Ej: 458920">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #e0e7ff;">Establecimiento de Salud (CESFAM / Hospital)</label>
+                        <input type="text" id="p-reg-center" class="form-control-dark" value="CESFAM Dr. Alberto Hurtado" required>
+                    </div>
+                    <button type="submit" class="btn-primary-full" style="background: var(--primary-light);">Guardar Perfil Profesional ✅</button>
+                </form>
+            </div>
+
+            <!-- CONTENIDO PRIVADO DEL PROFESIONAL -->
+            <div id="prof-app-screen" style="display: none;">
+                <!-- Barra de Sesión Activa del Profesional -->
+                <div class="session-topbar dark-bar">
+                    <div>
+                        <span style="font-size: 0.75rem; color: #c4b5fd; font-weight: 700; text-transform: uppercase;">SESIÓN CLÍNICA ACTIVA • FIRMA AUTOMÁTICA HABILITADA</span>
+                        <p style="font-size: 0.95rem; font-weight: 700;">🩺 <span id="p-session-name">Mat. Javiera Soto</span> • <span id="p-session-role" style="font-weight: 400; color: #e0e7ff;">Matrona / Matrón</span> (<span id="p-session-center" style="font-size: 0.85rem; color: #c4b5fd;">CESFAM Dr. Alberto Hurtado</span>)</p>
+                    </div>
+                    <button class="btn-nav" onclick="logoutProfesional()">Cerrar sesión 🔒</button>
+                </div>
+
+                <!-- Selector de Herramienta Clínica -->
+                <div class="prof-mode-switcher">
+                    <button id="prof-mode-fce" class="prof-mode-btn active" onclick="switchProfMode('fce')">
+                        📋 Ficha Clínica Electrónica (FCE) Ágil
+                    </button>
+                    <button id="prof-mode-buscador" class="prof-mode-btn" onclick="switchProfMode('buscador')">
+                        🌐 Buscador Intercultural y Pictogramas
+                    </button>
+                </div>
+
+                <!-- MODO A: FICHA CLÍNICA ELECTRÓNICA (FCE) ÁGIL -->
+                <div id="prof-panel-fce" class="prof-sub-panel active">
+                    <div class="ehr-patient-banner">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                                <span style="background: #805ad5; font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 6px;">FCE ACTIVA</span>
+                                <span id="ehr-patient-id-line" style="font-size: 0.82rem; color: #c4b5fd;">RUT/NIP: 26.458.910-K • 📱 +56 9 8765 4321</span>
+                            </div>
+                            <h2 id="ehr-patient-fullname" style="font-size: 1.4rem; margin-top: 0.25rem;">Camila Mendoza</h2>
+                            <p id="ehr-patient-subinfo" style="font-size: 0.85rem; color: #e2e8f0;">Fórmula Obstétrica: G2 P1 A0 • Edad Gestacional Actual: 24 Semanas</p>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <button class="btn-nav" style="background: #16a34a; color: #fff; border-color: #16a34a;" onclick="openClinicianPrepModal()">📲 Enviar Checklist WSP</button>
+                            <button class="btn-nav active" onclick="switchProfMode('buscador')">🌐 Apoyo Lingüístico</button>
+                        </div>
+                    </div>
+
+                    <div class="ehr-vitals-strip">
+                        <div class="vital-pill">
+                            <span class="v-lbl">Edad Gestacional</span>
+                            <strong id="ehr-vital-eg">24 Semanas</strong>
+                        </div>
+                        <div class="vital-pill">
+                            <span class="v-lbl">Grupo y Rh</span>
+                            <strong id="ehr-vital-rh">O (+)</strong>
+                        </div>
+                        <div class="vital-pill">
+                            <span class="v-lbl">Última PA</span>
+                            <strong>110/70 mmHg</strong>
+                        </div>
+                        <div class="vital-pill">
+                            <span class="v-lbl">Examen Sugerido EG</span>
+                            <strong id="ehr-vital-exam" style="font-size: 0.9rem;">PTGO 75g (24-28s)</strong>
+                        </div>
+                        <div class="vital-pill">
+                            <span class="v-lbl">Último LCF</span>
+                            <strong>148 lpm</strong>
+                        </div>
+                        <div class="vital-pill">
+                            <span class="v-lbl">VDRL / VIH</span>
+                            <strong style="color: var(--success-text);">No Reactivo</strong>
+                        </div>
+                    </div>
+
+                    <div class="ehr-layout">
+                        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                            <div class="main-card">
+                                <div class="ehr-section-title">⚠️ Alertas y Antecedentes</div>
+                                <div style="margin-bottom: 0.75rem;">
+                                    <span class="ehr-alert-tag">Alergia: Penicilina (Rash)</span>
+                                    <span class="ehr-ok-tag">Sin Riesgo ARO</span>
+                                    <span class="ehr-ok-tag">Suplementación Fe + AF</span>
+                                </div>
+                                <ul style="font-size: 0.85rem; color: var(--text-dark); margin-left: 1.1rem; line-height: 1.55;">
+                                    <li><strong>Mórbidos:</strong> Niega HTA, DM2 o patología tiroidea.</li>
+                                    <li><strong>Obstétricos:</strong> 1 parto vaginal espontáneo (2022, 3.250g, sin complicaciones).</li>
+                                    <li><strong>Psicosocial:</strong> Red de apoyo familiar presente. Migración regularizada (FONASA B).</li>
+                                </ul>
+                            </div>
+
+                            <div class="main-card">
+                                <div class="ehr-section-title">📎 Exámenes Según EG Actual</div>
+                                <div id="ehr-dynamic-attachments"></div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                            <div class="main-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <div class="ehr-section-title" style="border: none; margin: 0; padding: 0;">⚡ Nueva Evolución con Plantilla por Especialidad</div>
+                                    <span style="font-size: 0.78rem; color: var(--primary); font-weight: 700;">Hoy: 19 Nov 2026</span>
+                                </div>
+
+                                <div class="template-chips">
+                                    <button type="button" class="tpl-chip active" onclick="applyEHRTemplate('matrona', this)">👩‍⚕️ Control Prenatal Matrona</button>
+                                    <button type="button" class="tpl-chip" onclick="applyEHRTemplate('medico', this)">🩺 Médico Obstetra / ARO</button>
+                                    <button type="button" class="tpl-chip" onclick="applyEHRTemplate('nutricion', this)">🥗 Nutrición Gestante</button>
+                                    <button type="button" class="tpl-chip" onclick="applyEHRTemplate('urgencia', this)">🚨 Urgencia Maternal</button>
+                                </div>
+
+                                <form onsubmit="saveEHREvolution(event)">
+                                    <div class="ehr-form-grid">
+                                        <div>
+                                            <label style="font-size: 0.78rem; font-weight: 700;">Presión Arterial</label>
+                                            <input type="text" id="ehr-pa" class="input-light" value="112/72 mmHg" required>
+                                        </div>
+                                        <div>
+                                            <label style="font-size: 0.78rem; font-weight: 700;">Peso Actual (kg)</label>
+                                            <input type="text" id="ehr-peso" class="input-light" value="65.2 kg" required>
+                                        </div>
+                                        <div>
+                                            <label style="font-size: 0.78rem; font-weight: 700;" id="ehr-param1-lbl">Altura Uterina (AU)</label>
+                                            <input type="text" id="ehr-param1" class="input-light" value="24 cm">
+                                        </div>
+                                        <div>
+                                            <label style="font-size: 0.78rem; font-weight: 700;" id="ehr-param2-lbl">LCF / Mov. Fetales</label>
+                                            <input type="text" id="ehr-param2" class="input-light" value="146 lpm (+)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="margin-bottom: 0.75rem;">
+                                        <label style="font-size: 0.8rem; font-weight: 700;">Anamnesis, Examen Físico e Indicaciones (Plantilla Editable):</label>
+                                        <textarea id="ehr-notes" class="input-light" rows="5" style="resize: vertical; font-family: inherit;" required></textarea>
+                                    </div>
+
+                                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+                                        <label style="font-size: 0.82rem; display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+                                            <input type="checkbox" id="ehr-sync-portal" checked style="accent-color: var(--primary);">
+                                            Publicar resumen comprensible en el Portal de la Gestante
+                                        </label>
+                                        <button type="submit" class="btn-sm" style="padding: 0.65rem 1.25rem; font-size: 0.88rem;">💾 Guardar y Firmar Evolución</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="main-card">
+                                <div class="ehr-section-title">🕒 Historial de Evoluciones Clínicas</div>
+                                <div id="ehr-timeline-list">
+                                    <div class="timeline-entry">
+                                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem;">
+                                            <strong style="font-size: 0.9rem; color: var(--primary-dark);">Control Prenatal Matrona</strong>
+                                            <span style="font-size: 0.78rem; color: var(--text-muted);">04 Nov 2026 • Mat. Javiera Soto</span>
+                                        </div>
+                                        <p style="font-size: 0.84rem; color: var(--text-dark); margin-top: 0.25rem;">
+                                            Usuaria refiere buena tolerancia a suplementación prenatal. Sin contracciones ni pérdida de flujo genital. Latidos cardíacos fetales normales. Se entregan órdenes de laboratorio según edad gestacional.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODO B: BUSCADOR INTERCULTURAL PARA PROFESIONALES -->
+                <div id="prof-panel-buscador" class="prof-sub-panel">
+                    <div class="prof-search-container">
+                        <h3 style="margin-bottom: 1.25rem;">Buscador Intercultural de Atención Clínica Obstétrica</h3>
+                        <div class="search-inputs">
+                            <div>
+                                <label style="font-size: 0.8rem; display: block; margin-bottom: 0.35rem;">Origen de la usuaria</label>
+                                <select id="prof-country-select" class="form-control-dark" onchange="handleProfCountryChange()">
+                                    <option value="VE">🇻🇪 Venezuela</option>
+                                    <option value="HT">🇭🇹 Haití (Kreyòl)</option>
+                                    <option value="CO">🇨🇴 Colombia</option>
+                                    <option value="PE">🇵🇪 Perú</option>
+                                    <option value="BO">🇧🇴 Bolivia</option>
+                                    <option value="EC">🇪🇨 Ecuador</option>
+                                    <option value="DO">🇩🇴 Rep. Dominicana</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; display: block; margin-bottom: 0.35rem;">Expresión o vocablo mencionado por la paciente</label>
+                                <input type="text" id="prof-term-input" class="form-control-dark" value="Tener quebranto" placeholder="Escribe una palabra o elige abajo...">
+                            </div>
+                            <div style="display: flex; align-items: flex-end;">
+                                <button class="btn-submit" onclick="searchClinicianTerm()">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="quick-terms-bar">
+                            <span style="font-size: 0.78rem; color: #c4b5fd; font-weight: 700;">Expresiones frecuentes:</span>
+                            <div id="prof-quick-chips" style="display: flex; flex-wrap: wrap; gap: 0.4rem;"></div>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-header">
+                            <span id="clin-origin-label" style="font-size: 0.8rem; color: #c4b5fd;">Expresión referida por la usuaria (Venezuela)</span>
+                            <h2 id="clin-term-title" style="font-size: 1.5rem; margin-top: 0.2rem;">"Tener quebranto"</h2>
+                        </div>
+
+                        <div class="result-body">
+                            <div class="grid-2">
+                                <div>
+                                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">SIGNIFICADO CLÍNICO REAL</span>
+                                    <p id="clin-real-meaning" style="font-size: 1.1rem; font-weight: 700; color: var(--text-dark);">Febrícula / Sensación febril ligera</p>
+                                </div>
+                                <div>
+                                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">EQUIVALENTE EN EL EQUIPO DE SALUD (CHILE)</span>
+                                    <p id="clin-chile-equiv" style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">Febrícula o alza térmica leve (&lt; 38°C)</p>
+                                </div>
+                            </div>
+
+                            <div class="alert-box">
+                                <strong>💡 GUÍA DE COMUNICACIÓN RESPETUOSA E INTERCULTURAL</strong>
+                                <p id="clin-guide-text" style="margin-top: 0.3rem;">Valide el síntoma expresado por la usuaria sin corregirla de forma impositiva. Utilice preguntas abiertas como: <em>"¿Desde cuándo siente este quebranto o malestar?"</em> para precisar la temperatura y descartar signos de alarma.</p>
+                            </div>
+
+                            <div class="visual-support">
+                                <div>
+                                    <strong>🖼️ APOYO VISUAL PARA EXPLICACIÓN EN BOX</strong>
+                                    <p style="font-size: 0.85rem; color: var(--text-muted);">Lámina digital de comprobación de síntomas con pictogramas de semáforo de alerta.</p>
+                                </div>
+                                <button class="btn-nav" style="background: var(--primary); color: #fff;" onclick="openVisualModal()">Mostrar en pantalla</button>
+                            </div>
+
+                            <div class="visual-support" style="background: #f0fdf4; border-color: #86efac;">
+                                <div>
+                                    <strong style="color: #15803d;">📲 ENVIAR CHECKLIST DE PREPARACIÓN POR WHATSAPP</strong>
+                                    <p style="font-size: 0.85rem; color: var(--text-muted);">Ingresa el teléfono de la paciente y abre WhatsApp con las indicaciones en su idioma.</p>
+                                </div>
+                                <button class="btn-nav" style="background: #16a34a; color: #fff; border-color: #16a34a;" onclick="openClinicianPrepModal()">Enviar por WhatsApp</button>
+                            </div>
+
+                            <div class="teach-back-box">
+                                <strong style="color: var(--primary-dark);">🗣️ HERRAMIENTA DE VERIFICACIÓN DE COMPRENSIÓN (TEACH-BACK)</strong>
+                                <p style="font-size: 0.85rem; margin-top: 0.2rem;">Preguntas sugeridas al profesional para asegurar que la gestante comprendió el procedimiento o indicación:</p>
+                                <ul>
+                                    <li><em>"Para estar seguro de que me expliqué bien, ¿podría repetirme qué pasos hará si vuelve a sentir esta molestia?"</em></li>
+                                    <li><em>"¿Tiene alguna duda sobre el nombre del examen o el lugar donde debe tomárselo?"</em></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Modal Genérico -->
+    <div id="info-modal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h3 id="modal-title" style="color: var(--primary-dark); margin-bottom: 0.75rem;">Título</h3>
+            <div id="modal-content" style="font-size: 0.92rem; color: var(--text-dark); line-height: 1.6;"></div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+                <button class="btn-nav active" onclick="document.getElementById('info-modal').classList.remove('open')">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'es';
+        let activeSpecialtyLabel = 'Control Prenatal Matrona';
+        let activeDictFilter = 'ALL';
+        let activeTemplateKey = 'matrona';
+
+        // ESTADO DE USUARIOS Y SESIONES EN LOCALSTORAGE
+        const STORAGE_GESTANTES_KEY = 'idc_gestantes_users_v1';
+        const STORAGE_PROF_KEY = 'idc_prof_users_v1';
+        const SESSION_GESTANTE_KEY = 'idc_active_gestante_v1';
+        const SESSION_PROF_KEY = 'idc_active_prof_v1';
+
+        let activeGestanteUser = null;
+        let activeProfUser = null;
+
+        const defaultGestanteDemo = {
+            name: "Camila Mendoza",
+            user: "26.458.910-K",
+            pass: "1234",
+            phone: "+56 9 8765 4321",
+            country: "VE",
+            weeks: 24,
+            rh: "O (+)",
+            cesfam: "CESFAM Dr. Alberto Hurtado"
+        };
+
+        const defaultProfDemo = {
+            name: "Mat. Javiera Soto",
+            user: "17.890.234-5",
+            pass: "1234",
+            role: "Matrona / Matrón",
+            sis: "458920",
+            center: "CESFAM Dr. Alberto Hurtado"
+        };
+
+        // FORMATEAR NÚMERO DE TELÉFONO PARA ENLACE WA.ME
+        function cleanPhoneForWhatsApp(rawPhone) {
+            let digits = (rawPhone || '').replace(/\D/g, '');
+            if (digits.length === 9 && digits.startsWith('9')) {
+                digits = '56' + digits;
+            } else if (digits.length === 8) {
+                digits = '569' + digits;
+            }
+            return digits;
+        }
+
+        function launchWhatsApp(phoneNumber, messageText) {
+            const cleanDigits = cleanPhoneForWhatsApp(phoneNumber);
+            if (!cleanDigits || cleanDigits.length < 8) {
+                alert("⚠️ Por favor escribe un número de teléfono válido con código de país (Ej: +56 9 8765 4321) para abrir WhatsApp.");
+                return;
+            }
+            const encodedMsg = encodeURIComponent(messageText);
+            const url = `https://wa.me/${cleanDigits}?text=${encodedMsg}`;
+            window.open(url, '_blank');
+        }
+
+        // SINCRONIZAR TELÉFONO EN TODOS LOS CAMPOS Y GUARDAR EN PERFIL
+        function syncPhoneInputs(newVal) {
+            const wInput = document.getElementById('wsp-target-phone');
+            const sInput = document.getElementById('sidebar-wsp-phone');
+            if (wInput && wInput.value !== newVal) wInput.value = newVal;
+            if (sInput && sInput.value !== newVal) sInput.value = newVal;
+
+            if (activeGestanteUser) {
+                activeGestanteUser.phone = newVal.trim();
+                document.getElementById('g-session-phone').textContent = activeGestanteUser.phone || 'Sin teléfono';
+                document.getElementById('ehr-patient-id-line').textContent = `RUT/NIP: ${activeGestanteUser.user} • 📱 ${activeGestanteUser.phone || 'Sin teléfono'}`;
+
+                const list = getStoredGestantes();
+                const idx = list.findIndex(u => u.user.toLowerCase() === activeGestanteUser.user.toLowerCase());
+                if (idx >= 0) {
+                    list[idx] = activeGestanteUser;
+                    localStorage.setItem(STORAGE_GESTANTES_KEY, JSON.stringify(list));
+                }
+                localStorage.setItem(SESSION_GESTANTE_KEY, JSON.stringify(activeGestanteUser));
+            }
+        }
+
+        // GUÍA CLÍNICA Y EDUCATIVA DINÁMICA POR EDAD GESTACIONAL
+        function getGestationalStageData(weeks) {
+            const w = Math.max(1, Math.min(42, parseInt(weeks, 10) || 24));
+
+            if (w <= 13) {
+                return {
+                    trimester: { es: "1er Trimestre", ht: "1ye Trimès", en: "1st Trimester" },
+                    size: {
+                        es: `<strong>Tamaño aproximado:</strong> Una ciruela / limón (~${Math.max(1, Math.round(w * 0.6))} cm)`,
+                        ht: `<strong>Gwosè apeprè:</strong> Yon sitwon (~${Math.max(1, Math.round(w * 0.6))} cm)`,
+                        en: `<strong>Approx. size:</strong> A plum / lemon (~${Math.max(1, Math.round(w * 0.6))} cm)`
+                    },
+                    desc: {
+                        es: `En la semana ${w} se están formando los órganos principales de tu bebé y su corazón ya late con fuerza. Es normal sentir cansancio, sueño o náuseas matutinas.`,
+                        ht: `Nan semèn ${w}, ògàn prensipal tibebe a ap fòme epi kè li deja ap bat fò. Li nòmal pou w santi fatig oswa anvi vomi nan maten.`,
+                        en: `At week ${w}, your baby's vital organs are forming and the heartbeat is strong. Fatigue and morning nausea are common during this stage.`
+                    },
+                    selfcare: {
+                        es: "Toma Ácido Fólico todos los días, come porciones pequeñas y frecuentes para aliviar náuseas y evita el alcohol o tabaco.",
+                        ht: "Pran Asid Folik chak jou, manje ti pòsyon souvan pou evite kè plen epi bwè anpil dlo.",
+                        en: "Take Folic Acid daily, eat small frequent meals to ease nausea, and stay well hydrated."
+                    },
+                    exam: {
+                        es: "Batería prenatal inicial (Hemograma, Grupo/Rh, VDRL, VIH, Glicemia, Urocultivo) + Ecografía Doppler 11-14 semanas.",
+                        ht: "Premye egzamen san ak pipi (Emogram, VIH, VDRL, Sik) + Ekografi 11-14 semèn.",
+                        en: "Initial prenatal blood & urine panel (CBC, Blood type/Rh, VDRL, HIV, Glucose) + 11–14 week Ultrasound."
+                    },
+                    shortExamLabel: "Batería Inicial + Eco 11-14s",
+                    defaultPrepSelect: "laboratorio",
+                    auEst: "Intrapélvico / < 12 cm",
+                    docs: [
+                        {
+                            tagClass: "tag-exam", tag: "ORDEN DE EXAMEN",
+                            title: "Batería de Laboratorio 1er Trimestre (Hemograma, VDRL, VIH, Urocultivo)",
+                            sub: `Indicada en semanas 1-13 • Toma de muestras CESFAM`,
+                            docKey: "orden_1trim"
+                        },
+                        {
+                            tagClass: "tag-exam", tag: "ECOGRAFÍA",
+                            title: "Ecografía Obstétrica Precoz / Doppler 11-14 Semanas",
+                            sub: `Evaluación de edad gestacional y vitalidad fetal`,
+                            docKey: "orden_eco_11_14"
+                        },
+                        {
+                            tagClass: "tag-rx", tag: "RECETA MÉDICA",
+                            title: "Ácido Fólico 1 mg (1 comprimido diario)",
+                            sub: `Prevención de defectos del tubo neural • Farmacia CESFAM`,
+                            docKey: "receta_1trim"
+                        }
+                    ]
+                };
+            } else if (w <= 23) {
+                return {
+                    trimester: { es: "2do Trimestre", ht: "2yèm Trimès", en: "2nd Trimester" },
+                    size: {
+                        es: `<strong>Tamaño aproximado:</strong> Un mango / plátano (~${w + 4} cm)`,
+                        ht: `<strong>Gwosè apeprè:</strong> Yon mango / fig (~${w + 4} cm)`,
+                        en: `<strong>Approx. size:</strong> A mango / banana (~${w + 4} cm)`
+                    },
+                    desc: {
+                        es: `En la semana ${w} suelen disminuir las náuseas y recuperas energía. Comenzarás a sentir los primeros movimientos suaves de tu bebé (como burbujas o mariposas).`,
+                        ht: `Nan semèn ${w}, kè plen an diminye epi ou reprann enèji. Ou kòmanse santi premye ti mouvman tibebe a nan vant ou.`,
+                        en: `At week ${w}, nausea usually fades and energy returns. You will start feeling your baby's first gentle movements.`
+                    },
+                    selfcare: {
+                        es: "Inicia suplementación con Hierro según indicación de matrona, mantén una postura cómoda al dormir (idealmente de lado izquierdo) y usa ropa holgada.",
+                        ht: "Kòmanse pran Fè jan matwòn nan di w la, dòmi sou kote gòch ou epi mete rad ki alèz.",
+                        en: "Start Iron supplementation as prescribed, sleep on your left side, and wear comfortable clothing."
+                    },
+                    exam: {
+                        es: "Ecografía Morfológica / Doppler (ideal entre semanas 20 y 24) para revisar detalladamente el desarrollo de todos los órganos del bebé.",
+                        ht: "Ekografi Mòfolojik (ant 20 ak 24 semèn) pou gade tout ògàn tibebe a an detay.",
+                        en: "Morphological / Anatomy Ultrasound (weeks 20–24) to examine all fetal organs in detail."
+                    },
+                    shortExamLabel: "Eco Morfológica (20-24s)",
+                    defaultPrepSelect: "ecografia",
+                    auEst: `${Math.max(14, w - 1)} cm`,
+                    docs: [
+                        {
+                            tagClass: "tag-exam", tag: "ORDEN DE ECOGRAFÍA",
+                            title: "Ecografía Morfológica Segundo Trimestre (20-24 semanas)",
+                            sub: `Unidad Medicina Materno Fetal • Sin cremas en abdomen`,
+                            docKey: "orden_eco_morf"
+                        },
+                        {
+                            tagClass: "tag-rx", tag: "RECETA MÉDICA",
+                            title: "Sulfato Ferroso 200 mg + Ácido Fólico 1 mg",
+                            sub: `Suplementación 2do Trimestre • Farmacia CESFAM`,
+                            docKey: "receta_hierro"
+                        },
+                        {
+                            tagClass: "tag-cert", tag: "CERTIFICADO",
+                            title: `Certificado de Embarazo y Edad Gestacional (${w} sem)`,
+                            sub: `Válido para Asignación Maternal y Chile Crece Contigo`,
+                            docKey: "certificado_embarazo"
+                        }
+                    ]
+                };
+            } else if (w <= 28) {
+                return {
+                    trimester: { es: "2do Trimestre", ht: "2yèm Trimès", en: "2nd Trimester" },
+                    size: {
+                        es: `<strong>Tamaño aproximado:</strong> Un choclo / maíz (~${w + 6} cm)`,
+                        ht: `<strong>Gwosè apeprè:</strong> Yon mayi (~${w + 6} cm)`,
+                        en: `<strong>Approx. size:</strong> An ear of corn (~${w + 6} cm)`
+                    },
+                    desc: {
+                        es: `En la semana ${w} tu bebé ya responde a sonidos externos y su sentido del equilibrio se está afinando. Tu pancita crece notablemente y puedes sentir pataditas más definidas.`,
+                        ht: `Nan semèn ${w}, tibebe a deja reponn ak son ki soti deyò. Vant ou ap grandi anpil epi ou ka santi ti kou pye ki pi klè.`,
+                        en: `At week ${w}, your baby responds to external sounds and kicks feel stronger and more regular.`
+                    },
+                    selfcare: {
+                        es: "Mantén una hidratación constante, descansa elevando tus piernas para evitar hinchazón leve y prepárate con ayuno para tu examen de azúcar.",
+                        ht: "Bwè anpil dlo, repoze ak janm ou leve pou evite pye anfle epi prepare w ajen pou egzamen sik la.",
+                        en: "Stay hydrated, elevate your legs when resting, and prepare for your fasting glucose screening."
+                    },
+                    exam: {
+                        es: "Prueba de Tolerancia a la Glucosa Oral (PTGO 75g) + Hemograma de control (obligatorio entre semanas 24 y 28).",
+                        ht: "Tès Tolerans Glikoz (PTGO 75g) + Emogram (ant 24 ak 28 semèn, ou dwe vini ajen).",
+                        en: "Oral Glucose Tolerance Test (OGTT / PTGO 75g) + Control CBC (weeks 24–28, fasting required)."
+                    },
+                    shortExamLabel: "PTGO 75g + Hemograma (24-28s)",
+                    defaultPrepSelect: "ptgo_glucosa",
+                    auEst: `${w} cm`,
+                    docs: [
+                        {
+                            tagClass: "tag-exam", tag: "ORDEN DE EXAMEN (AYUNO)",
+                            title: "Prueba Tolerancia Glucosa (PTGO 75g) + Hemograma 2do Trimestre",
+                            sub: `Ventana semanas 24-28 • Acudir con 8-12h de ayuno`,
+                            docKey: "orden_ptgo"
+                        },
+                        {
+                            tagClass: "tag-rx", tag: "RECETA MÉDICA",
+                            title: "Sulfato Ferroso 200 mg + Ácido Fólico 1 mg",
+                            sub: `Vigente • Retiro mensual en Farmacia CESFAM`,
+                            docKey: "receta_hierro"
+                        },
+                        {
+                            tagClass: "tag-cert", tag: "CERTIFICADO",
+                            title: `Certificado de Embarazo y Edad Gestacional (${w} sem)`,
+                            sub: `Válido para Asignación Maternal, Chile Crece Contigo y empleador`,
+                            docKey: "certificado_embarazo"
+                        }
+                    ]
+                };
+            } else if (w <= 37) {
+                return {
+                    trimester: { es: "3er Trimestre", ht: "3yèm Trimès", en: "3rd Trimester" },
+                    size: {
+                        es: `<strong>Tamaño aproximado:</strong> Una piña / zapallo (~${w + 11} cm)`,
+                        ht: `<strong>Gwosè apeprè:</strong> Yon zannanna (~${w + 11} cm)`,
+                        en: `<strong>Approx. size:</strong> A pineapple / squash (~${w + 11} cm)`
+                    },
+                    desc: {
+                        es: `En la semana ${w} tu bebé gana peso rápidamente y madura sus pulmones. Puede que sientas contracciones suaves sin dolor (Braxton Hicks) y más presión en la pelvis.`,
+                        ht: `Nan semèn ${w}, tibebe a ap pran pwa rapid epi poumon li ap devlope. Ou ka santi ti kontraksyon lejè san doulè.`,
+                        en: `At week ${w}, your baby is gaining weight rapidly and maturing their lungs. Mild painless Braxton Hicks contractions may occur.`
+                    },
+                    selfcare: {
+                        es: "Prepara tu bolso maternal, identifica la Urgencia Maternal de tu hospital de referencia y cuenta los movimientos de tu bebé después de comer.",
+                        ht: "Prepare valiz matènite w, konnen kote ijans lopital la ye epi konte mouvman tibebe a apre w fin manje.",
+                        en: "Pack your hospital bag, confirm your Maternity ER route, and monitor fetal movements after meals."
+                    },
+                    exam: {
+                        es: "Ecografía de Crecimiento Fetal (30-34 sem), VDRL/VIH de 3er trimestre y Cultivo Vaginal/Perianal de Estreptococo Grupo B (35-37 sem).",
+                        ht: "Ekografi Kwasans (30-34 semèn), VDRL/VIH ak Tès Etreptokòk B (35-37 semèn).",
+                        en: "Growth Ultrasound (30–34 wks), 3rd Trimester VDRL/HIV, and Group B Strep (GBS) Swab (35–37 wks)."
+                    },
+                    shortExamLabel: "Eco 3er Trim + Cultivo SGB (35-37s)",
+                    defaultPrepSelect: "laboratorio",
+                    auEst: `${Math.min(35, w - 1)} cm`,
+                    docs: [
+                        {
+                            tagClass: "tag-exam", tag: "ORDEN DE EXAMEN 3ER TRIM.",
+                            title: "Cultivo Estreptococo Grupo B (35-37 sem) + VDRL / VIH 3er Trimestre",
+                            sub: `Prevención de infección neonatal en el parto • CESFAM`,
+                            docKey: "orden_3trim_sgb"
+                        },
+                        {
+                            tagClass: "tag-exam", tag: "ECOGRAFÍA",
+                            title: "Ecografía Obstétrica de Crecimiento y Presentación Fetal (30-34 sem)",
+                            sub: `Evaluación de peso fetal, placenta y líquido amniótico`,
+                            docKey: "orden_eco_crec"
+                        },
+                        {
+                            tagClass: "tag-cert", tag: "CERTIFICADO",
+                            title: `Certificado Prenatal de Descanso Maternal / Prenatal (${w} sem)`,
+                            sub: `Válido para trámite de licencia prenatal (desde semana 34)`,
+                            docKey: "certificado_embarazo"
+                        }
+                    ]
+                };
+            } else {
+                return {
+                    trimester: { es: "3er Trimestre (A Término)", ht: "3yèm Trimès (A Tèm)", en: "3rd Trimester (Full Term)" },
+                    size: {
+                        es: `<strong>Tamaño aproximado:</strong> Una sandía (~50 cm • ~3.200 g)`,
+                        ht: `<strong>Gwosè apeprè:</strong> Yon melon (~50 cm • ~3.200 g)`,
+                        en: `<strong>Approx. size:</strong> A watermelon (~50 cm • ~3,200 g)`
+                    },
+                    desc: {
+                        es: `¡Estás en la recta final (semana ${w})! Tu bebé está completamente listo para nacer. Mantente atenta a contracciones rítmicas dolorosas cada 5 minutos o rotura de bolsa.`,
+                        ht: `Ou nan dènye liy dwat la (semèn ${w})! Tibebe a pare pou l fèt. Veye kontraksyon ki gen ritm chak 5 minit oswa si dlo kase.`,
+                        en: `You are in the home stretch (week ${w})! Your baby is ready to be born. Watch for regular painful contractions every 5 mins or water breaking.`
+                    },
+                    selfcare: {
+                        es: "Ten a mano tu Cédula/Pasaporte, Carnet Maternal y bolso del bebé. Si rompes bolsa o tienes sangrado, acude directo a Urgencia Maternal.",
+                        ht: "Kenbe Paspò/Kat idantite w, Kanè Matènel ak valiz tibebe a prè. Si dlo kase oswa ou senyen, ale nan Ijans Matènite.",
+                        en: "Keep your ID/Passport, Maternal Booklet, and baby bag ready. Go straight to Maternity ER if your water breaks or bleeding occurs."
+                    },
+                    exam: {
+                        es: "Control semanal con Matrona y Registro Basal No Estresante (RBNE / Monitoreo fetal) a partir de la semana 40.",
+                        ht: "Kontwòl chak semèn ak Matwòn epi Monitè Kè Tibebe (RBNE) depi semèn 40.",
+                        en: "Weekly Midwife checkup and Non-Stress Test (NST / Fetal Monitoring) starting at week 40."
+                    },
+                    shortExamLabel: "Control Semanal + RBNE (40s)",
+                    defaultPrepSelect: "primera_cita",
+                    auEst: "34 - 36 cm",
+                    docs: [
+                        {
+                            tagClass: "tag-exam", tag: "ORDEN MONITOREO",
+                            title: "Registro Basal No Estresante (RBNE) + Perfil Biofísico",
+                            sub: `Control de bienestar fetal de término • Policlínico ARO / Hospital`,
+                            docKey: "orden_rbne"
+                        },
+                        {
+                            tagClass: "tag-cert", tag: "DOCUMENTO DE PARTO",
+                            title: `Pase de Ingreso y Resumen Prenatal para Maternidad (${w} sem)`,
+                            sub: `Presentar en Urgencia Maternal junto a Carnet Maternal y Cédula/Pasaporte`,
+                            docKey: "certificado_embarazo"
+                        }
+                    ]
+                };
+            }
+        }
+
+        function getStoredGestantes() {
+            const raw = localStorage.getItem(STORAGE_GESTANTES_KEY);
+            let list = raw ? JSON.parse(raw) : [];
+            if (!list.some(u => u.user.toLowerCase() === defaultGestanteDemo.user.toLowerCase())) {
+                list.push(defaultGestanteDemo);
+                localStorage.setItem(STORAGE_GESTANTES_KEY, JSON.stringify(list));
+            }
+            return list;
+        }
+
+        function getStoredProfs() {
+            const raw = localStorage.getItem(STORAGE_PROF_KEY);
+            let list = raw ? JSON.parse(raw) : [];
+            if (!list.some(u => u.user.toLowerCase() === defaultProfDemo.user.toLowerCase())) {
+                list.push(defaultProfDemo);
+                localStorage.setItem(STORAGE_PROF_KEY, JSON.stringify(list));
+            }
+            return list;
+        }
+
+        // LÓGICA DE AUTENTICACIÓN GESTANTE
+        function switchGestanteAuthTab(tab) {
+            document.getElementById('g-tab-login').classList.toggle('active', tab === 'login');
+            document.getElementById('g-tab-register').classList.toggle('active', tab === 'register');
+            document.getElementById('gestante-login-form').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('gestante-register-form').style.display = tab === 'register' ? 'block' : 'none';
+            document.getElementById('g-login-error').style.display = 'none';
+        }
+
+        function registerGestante(e) {
+            e.preventDefault();
+            const newUser = {
+                name: document.getElementById('g-reg-name').value.trim(),
+                user: document.getElementById('g-reg-user').value.trim(),
+                pass: document.getElementById('g-reg-pass').value,
+                phone: document.getElementById('g-reg-phone').value.trim(),
+                country: document.getElementById('g-reg-country').value,
+                weeks: parseInt(document.getElementById('g-reg-weeks').value, 10) || 24,
+                rh: document.getElementById('g-reg-rh').value,
+                cesfam: document.getElementById('g-reg-cesfam').value.trim() || "CESFAM Dr. Alberto Hurtado"
+            };
+
+            const list = getStoredGestantes();
+            const existingIdx = list.findIndex(u => u.user.toLowerCase() === newUser.user.toLowerCase());
+            if (existingIdx >= 0) {
+                list[existingIdx] = newUser;
+            } else {
+                list.push(newUser);
+            }
+            localStorage.setItem(STORAGE_GESTANTES_KEY, JSON.stringify(list));
+            setActiveGestanteSession(newUser);
+        }
+
+        function loginGestante(e) {
+            e.preventDefault();
+            const userInp = document.getElementById('g-login-user').value.trim().toLowerCase();
+            const passInp = document.getElementById('g-login-pass').value;
+            const list = getStoredGestantes();
+
+            const found = list.find(u => u.user.toLowerCase() === userInp && u.pass === passInp);
+            if (!found) {
+                const err = document.getElementById('g-login-error');
+                err.textContent = "❌ Usuario o contraseña incorrectos. Si es tu primera vez, haz clic en 'Crear mi Usuario'.";
+                err.style.display = 'block';
+                return;
+            }
+            setActiveGestanteSession(found);
+        }
+
+        function demoGestanteLogin() {
+            setActiveGestanteSession({ ...defaultGestanteDemo });
+        }
+
+        function refreshGestationalContent() {
+            const weeks = activeGestanteUser ? activeGestanteUser.weeks : 24;
+            const stage = getGestationalStageData(weeks);
+            const lang = currentLang || 'es';
+
+            document.getElementById('g-display-weeks').textContent = weeks;
+            document.getElementById('txt-trimester').textContent = stage.trimester[lang] || stage.trimester.es;
+            document.getElementById('txt-baby-size').innerHTML = stage.size[lang] || stage.size.es;
+
+            const titlePrefix = lang === 'ht' ? `🌱 Suivi semèn ${weeks} ou a` : (lang === 'en' ? `🌱 Week ${weeks} Overview` : `🌱 Seguimiento de tu semana ${weeks}`);
+            document.getElementById('txt-week-title').textContent = titlePrefix;
+            document.getElementById('txt-week-desc').textContent = stage.desc[lang] || stage.desc.es;
+            document.getElementById('txt-selfcare-desc').textContent = stage.selfcare[lang] || stage.selfcare.es;
+            document.getElementById('txt-exam-desc').textContent = stage.exam[lang] || stage.exam.es;
+
+            const freqText = weeks >= 36
+                ? (lang === 'ht' ? 'Chak semèn (1 fwa pa semèn)' : (lang === 'en' ? 'Weekly checkups' : 'Cada 1 semana (Recta final)'))
+                : (weeks >= 28
+                    ? (lang === 'ht' ? 'Chak 2 semèn' : (lang === 'en' ? 'Every 2 weeks' : 'Cada 2 semanas'))
+                    : (lang === 'ht' ? 'Chak 4 semèn' : (lang === 'en' ? 'Every 4 weeks' : 'Cada 4 semanas')));
+            document.getElementById('txt-control-freq').textContent = freqText;
+
+            const docsContainer = document.getElementById('dynamic-docs-list');
+            if (docsContainer) {
+                docsContainer.innerHTML = stage.docs.map(d => `
+                    <div class="doc-item">
+                        <div>
+                            <span class="doc-tag ${d.tagClass}">${d.tag}</span>
+                            <h5 style="font-size: 0.95rem;">${d.title}</h5>
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">${d.sub}</p>
+                        </div>
+                        <button class="btn-sm" onclick="downloadClinicalDoc('${d.docKey}', '${d.title.replace(/'/g, "")}')">⬇ Descargar</button>
+                    </div>
+                `).join('');
+            }
+
+            const prepSelect = document.getElementById('appointment-type-select');
+            if (prepSelect && stage.defaultPrepSelect) {
+                prepSelect.value = stage.defaultPrepSelect;
+            }
+            renderPreparationGuide();
+
+            const pRh = activeGestanteUser ? activeGestanteUser.rh : 'O (+)';
+            const pPhone = activeGestanteUser && activeGestanteUser.phone ? activeGestanteUser.phone : '+56 9 8765 4321';
+            const pUser = activeGestanteUser ? activeGestanteUser.user : '26.458.910-K';
+
+            document.getElementById('portal-patient-meta').textContent = `EG: ${weeks} Semanas • Grupo Rh: ${pRh} • Previsión: FONASA B`;
+            document.getElementById('ehr-patient-id-line').textContent = `RUT/NIP: ${pUser} • 📱 ${pPhone}`;
+            document.getElementById('ehr-patient-subinfo').textContent = `Fórmula Obstétrica: G2 P1 A0 • Edad Gestacional Actual: ${weeks} Semanas`;
+            document.getElementById('ehr-vital-eg').textContent = `${weeks} Semanas`;
+            document.getElementById('ehr-vital-exam').textContent = stage.shortExamLabel;
+
+            applyEHRTemplate(activeTemplateKey);
+        }
+
+        function changeGestationalWeek(delta) {
+            if (!activeGestanteUser) return;
+            const nextWeek = Math.max(1, Math.min(42, (parseInt(activeGestanteUser.weeks, 10) || 24) + delta));
+            activeGestanteUser.weeks = nextWeek;
+
+            const list = getStoredGestantes();
+            const idx = list.findIndex(u => u.user.toLowerCase() === activeGestanteUser.user.toLowerCase());
+            if (idx >= 0) {
+                list[idx] = activeGestanteUser;
+                localStorage.setItem(STORAGE_GESTANTES_KEY, JSON.stringify(list));
+            }
+            localStorage.setItem(SESSION_GESTANTE_KEY, JSON.stringify(activeGestanteUser));
+            refreshGestationalContent();
+        }
+
+        function sendDirectWhatsApp() {
+            const phone = document.getElementById('wsp-target-phone').value.trim() || document.getElementById('sidebar-wsp-phone').value.trim();
+            const text = document.getElementById('whatsapp-message-text').textContent;
+            launchWhatsApp(phone, text);
+        }
+
+        function setActiveGestanteSession(userObj) {
+            if (!userObj.phone) userObj.phone = "+56 9 8765 4321";
+            activeGestanteUser = userObj;
+            localStorage.setItem(SESSION_GESTANTE_KEY, JSON.stringify(userObj));
+
+            document.getElementById('gestante-auth-screen').style.display = 'none';
+            document.getElementById('gestante-app-screen').style.display = 'block';
+
+            document.getElementById('g-session-name').textContent = userObj.name;
+            document.getElementById('g-session-id').textContent = userObj.user;
+            document.getElementById('g-session-phone').textContent = userObj.phone;
+            document.getElementById('wsp-target-phone').value = userObj.phone;
+            document.getElementById('sidebar-wsp-phone').value = userObj.phone;
+            document.getElementById('g-display-cesfam').textContent = userObj.cesfam;
+
+            document.getElementById('portal-cesfam-label').textContent = `${userObj.cesfam} • Ficha Protegida`;
+            document.getElementById('txt-welcome-patient').textContent = `Bienvenida, ${userObj.name}`;
+
+            document.getElementById('ehr-patient-fullname').textContent = userObj.name;
+            document.getElementById('ehr-vital-rh').textContent = userObj.rh;
+
+            const countryMap = {
+                VE: { lang: 'es', label: 'Español 🇻🇪' },
+                HT: { lang: 'ht', label: 'Kreyòl Ayisyen 🇭🇹' },
+                CO: { lang: 'es', label: 'Español 🇨🇴' },
+                PE: { lang: 'es', label: 'Español 🇵🇪' },
+                BO: { lang: 'es', label: 'Español 🇧🇴' },
+                EC: { lang: 'es', label: 'Español 🇪🇨' },
+                DO: { lang: 'es', label: 'Español 🇩🇴' },
+                EN: { lang: 'en', label: 'English 🌐' }
+            };
+            const cInfo = countryMap[userObj.country] || countryMap.VE;
+            const flagBtn = document.querySelector(`.flag-btn[data-code="${userObj.country}"]`);
+            if (flagBtn) {
+                selectCountry(userObj.country, cInfo.lang, cInfo.label, flagBtn);
+            } else {
+                refreshGestationalContent();
+            }
+        }
+
+        function logoutGestante() {
+            activeGestanteUser = null;
+            localStorage.removeItem(SESSION_GESTANTE_KEY);
+            document.getElementById('gestante-app-screen').style.display = 'none';
+            document.getElementById('gestante-auth-screen').style.display = 'block';
+            document.getElementById('g-login-user').value = '';
+            document.getElementById('g-login-pass').value = '';
+        }
+
+        function openEditGestanteModal() {
+            if (!activeGestanteUser) return;
+            const modal = document.getElementById('info-modal');
+            document.getElementById('modal-title').textContent = "✏️ Actualizar mis Datos, Teléfono y Semanas";
+            document.getElementById('modal-content').innerHTML = `
+                <form onsubmit="saveEditedGestante(event)">
+                    <div class="form-group">
+                        <label>Nombre y Apellido</label>
+                        <input type="text" id="edit-g-name" class="input-light" value="${activeGestanteUser.name}" required>
+                    </div>
+                    <div class="auth-grid-2">
+                        <div class="form-group">
+                            <label>📱 Número de WhatsApp</label>
+                            <input type="tel" id="edit-g-phone" class="input-light" value="${activeGestanteUser.phone || '+56 9 8765 4321'}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Semanas de Embarazo (1 a 42)</label>
+                            <input type="number" id="edit-g-weeks" class="input-light" min="1" max="42" value="${activeGestanteUser.weeks}" required>
+                        </div>
+                    </div>
+                    <div class="auth-grid-2">
+                        <div class="form-group">
+                            <label>Grupo Sanguíneo y Rh</label>
+                            <input type="text" id="edit-g-rh" class="input-light" value="${activeGestanteUser.rh}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CESFAM / Consultorio</label>
+                            <input type="text" id="edit-g-cesfam" class="input-light" value="${activeGestanteUser.cesfam}" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary-full">Guardar Cambios ✅</button>
+                </form>
+            `;
+            modal.classList.add('open');
+        }
+
+        function saveEditedGestante(e) {
+            e.preventDefault();
+            activeGestanteUser.name = document.getElementById('edit-g-name').value.trim();
+            activeGestanteUser.phone = document.getElementById('edit-g-phone').value.trim();
+            activeGestanteUser.weeks = Math.max(1, Math.min(42, parseInt(document.getElementById('edit-g-weeks').value, 10) || 24));
+            activeGestanteUser.rh = document.getElementById('edit-g-rh').value.trim();
+            activeGestanteUser.cesfam = document.getElementById('edit-g-cesfam').value.trim();
+
+            const list = getStoredGestantes();
+            const idx = list.findIndex(u => u.user.toLowerCase() === activeGestanteUser.user.toLowerCase());
+            if (idx >= 0) {
+                list[idx] = activeGestanteUser;
+                localStorage.setItem(STORAGE_GESTANTES_KEY, JSON.stringify(list));
+            }
+            setActiveGestanteSession(activeGestanteUser);
+            document.getElementById('info-modal').classList.remove('open');
+        }
+
+        // LÓGICA DE AUTENTICACIÓN PROFESIONAL
+        function switchProfAuthTab(tab) {
+            document.getElementById('p-tab-login').classList.toggle('active', tab === 'login');
+            document.getElementById('p-tab-register').classList.toggle('active', tab === 'register');
+            document.getElementById('prof-login-form').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('prof-register-form').style.display = tab === 'register' ? 'block' : 'none';
+            document.getElementById('p-login-error').style.display = 'none';
+        }
+
+        function registerProfesional(e) {
+            e.preventDefault();
+            const newProf = {
+                name: document.getElementById('p-reg-name').value.trim(),
+                user: document.getElementById('p-reg-user').value.trim(),
+                pass: document.getElementById('p-reg-pass').value,
+                role: document.getElementById('p-reg-role').value,
+                sis: document.getElementById('p-reg-sis').value.trim() || "S/N",
+                center: document.getElementById('p-reg-center').value.trim() || "CESFAM Dr. Alberto Hurtado"
+            };
+
+            const list = getStoredProfs();
+            const existingIdx = list.findIndex(u => u.user.toLowerCase() === newProf.user.toLowerCase());
+            if (existingIdx >= 0) {
+                list[existingIdx] = newProf;
+            } else {
+                list.push(newProf);
+            }
+            localStorage.setItem(STORAGE_PROF_KEY, JSON.stringify(list));
+            setActiveProfSession(newProf);
+        }
+
+        function loginProfesional(e) {
+            e.preventDefault();
+            const userInp = document.getElementById('p-login-user').value.trim().toLowerCase();
+            const passInp = document.getElementById('p-login-pass').value;
+            const list = getStoredProfs();
+
+            const found = list.find(u => u.user.toLowerCase() === userInp && u.pass === passInp);
+            if (!found) {
+                const err = document.getElementById('p-login-error');
+                err.textContent = "❌ Credenciales inválidas. Crea tu cuenta profesional en la pestaña superior si aún no tienes una.";
+                err.style.display = 'block';
+                return;
+            }
+            setActiveProfSession(found);
+        }
+
+        function demoProfLogin() {
+            setActiveProfSession(defaultProfDemo);
+        }
+
+        function setActiveProfSession(profObj) {
+            activeProfUser = profObj;
+            localStorage.setItem(SESSION_PROF_KEY, JSON.stringify(profObj));
+
+            document.getElementById('prof-auth-screen').style.display = 'none';
+            document.getElementById('prof-app-screen').style.display = 'block';
+
+            document.getElementById('p-session-name').textContent = profObj.name;
+            document.getElementById('p-session-role').textContent = profObj.role;
+            document.getElementById('p-session-center').textContent = profObj.center;
+        }
+
+        function logoutProfesional() {
+            activeProfUser = null;
+            localStorage.removeItem(SESSION_PROF_KEY);
+            document.getElementById('prof-app-screen').style.display = 'none';
+            document.getElementById('prof-auth-screen').style.display = 'block';
+            document.getElementById('p-login-user').value = '';
+            document.getElementById('p-login-pass').value = '';
+        }
+
+        const translations = {
+            es: {
+                selectCountry: "📍 Selecciona tu país de origen para adaptar los términos e idioma:",
+                tabEmbarazo: "🌱 Mi Embarazo",
+                tabPreparacion: "✅ Preparación Cita y WSP",
+                tabPortal: "📄 Mis Exámenes y Recetas",
+                tabDiccionario: "📖 Diccionario",
+                tabSistema: "🏥 Sistema Chileno",
+                weekLabel: "SEMANA",
+                fetalBadge: "Desarrollo fetal",
+                selfcareTitle: "💡 Autocuidado sugerido:",
+                examTitle: "🩺 Examen clave en Chile (esta etapa):",
+                notesTitle: "📋 Controles y beneficios vigentes según tu semana",
+                controlMatrona: "🔹 Control prenatal con Matrona",
+                pnac: "💊 Retiro de Vitaminas / Hierro y Leche (PNAC)",
+                pnacStatus: "Disponible en policlínico",
+                prepSelectLbl: "📅 Selecciona tu cita agendada para ver tu guía y checklist automático:",
+                autoMsgTitle: "📲 Enviar Recordatorio por WhatsApp",
+                autoMsgSub: "Coloca el número de teléfono con código de país y presiona enviar para abrir WhatsApp con el mensaje listo.",
+                btnSendWspDirect: "📲 Enviar ahora por WhatsApp",
+                btnCopyReminder: "📋 Copiar texto del mensaje",
+                tipReagendar: "⏰ ¿No puedes asistir?",
+                tipReagendarDesc: "Avísanos con al menos 24 horas de anticipación para reasignar tu hora y darte un nuevo cupo sin perder tus controles.",
+                docsHeading: "📄 Órdenes y Documentos para tu Semana Actual",
+                docsSub: "Órdenes vigentes ajustadas automáticamente a tu edad gestacional.",
+                historyHeading: "🩺 Resumen de Atenciones Anteriores",
+                historySub: "Consulta lo conversado e indicado en cada control prenatal."
+            },
+            ht: {
+                selectCountry: "📍 Chwazi peyi kote ou soti pou adapte mo ak lang lan:",
+                tabEmbarazo: "🌱 Gwosès Mwen",
+                tabPreparacion: "✅ Preparasyon Randevou ak WSP",
+                tabPortal: "📄 Egzamen ak Preskripsyon",
+                tabDiccionario: "📖 Diksyonè",
+                tabSistema: "🏥 Sistèm Chilyen",
+                weekLabel: "SEMÈN",
+                fetalBadge: "Devlopman tibebe a",
+                selfcareTitle: "💡 Konsèy pou pran swen tèt ou:",
+                examTitle: "🩺 Egzamen enpòtan nan Chili (etap sa a):",
+                notesTitle: "📋 Kontwòl ak avantaj selon semèn ou",
+                controlMatrona: "🔹 Kontwòl prenatal ak Matwòn (Sajfanm)",
+                pnac: "💊 Pran Vitamin / Fè ak Lèt (PNAC)",
+                pnacStatus: "Disponib nan klinik la",
+                prepSelectLbl: "📅 Chwazi randevou ou pran an pou wè gid ak lis verifikasyon otomatik ou:",
+                autoMsgTitle: "📲 Voye Rapèl Dirèk sou WhatsApp",
+                autoMsgSub: "Mete nimewo telefòn nan epi peze voye pou ouvri WhatsApp ak mesaj la pare.",
+                btnSendWspDirect: "📲 Voye kounye a sou WhatsApp",
+                btnCopyReminder: "📋 Kopye tèks mesaj la",
+                tipReagendar: "⏰ Ou pa ka vini?",
+                tipReagendarDesc: "Fè nou konnen 24 èdtan anvan pou nou ba ou yon lòt randevou san ou pa pèdi swivi ou.",
+                docsHeading: "📄 Lòd Egzamen pou Semèn Ou Ye a",
+                docsSub: "Dokiman ki adapte otomatikman ak semèn gwosès ou.",
+                historyHeading: "🩺 Rezime Konsiltasyon Anvan yo",
+                historySub: "Gade sa yo te di ak endike nan chak kontwòl prenatal."
+            },
+            en: {
+                selectCountry: "📍 Select your country of origin to adapt terms and language:",
+                tabEmbarazo: "🌱 My Pregnancy",
+                tabPreparacion: "✅ Visit Prep & WhatsApp",
+                tabPortal: "📄 My Labs & Prescriptions",
+                tabDiccionario: "📖 Dictionary",
+                tabSistema: "🏥 Health System",
+                weekLabel: "WEEK",
+                fetalBadge: "Fetal development",
+                selfcareTitle: "💡 Suggested self-care:",
+                examTitle: "🩺 Key exam in Chile (this stage):",
+                notesTitle: "📋 Checkups & benefits for your current week",
+                controlMatrona: "🔹 Prenatal checkup with Midwife (Matrona)",
+                pnac: "💊 Pick up Vitamins / Iron & Milk (PNAC)",
+                pnacStatus: "Available at clinic",
+                prepSelectLbl: "📅 Select your scheduled appointment to view your automatic guide & checklist:",
+                autoMsgTitle: "📲 Send Reminder via WhatsApp",
+                autoMsgSub: "Enter the phone number with country code and click send to open WhatsApp with the message ready.",
+                btnSendWspDirect: "📲 Send now via WhatsApp",
+                btnCopyReminder: "📋 Copy message text",
+                tipReagendar: "⏰ Can't make it?",
+                tipReagendarDesc: "Let us know at least 24 hours in advance to reschedule your slot without missing prenatal care.",
+                docsHeading: "📄 Orders & Documents for Your Current Week",
+                docsSub: "Active lab orders automatically matched to your gestational age.",
+                historyHeading: "🩺 Past Clinical Visits Summary",
+                historySub: "Review notes and instructions from your previous prenatal visits."
+            }
+        };
+
+        const interculturalDictionary = [
+            {
+                codes: ["VE", "CO", "DO"],
+                originLabel: "🇻🇪 Venezuela / 🇨🇴 Colombia / 🇩🇴 Rep. Dom.",
+                term: "Tener quebranto",
+                chileTerm: "Febrícula / Sensación febril ligera",
+                note: "Sensación de calor corporal, decaimiento o escalofríos leves (temperatura entre 37.5°C y 37.9°C). En Chile se distingue de la fiebre alta (≥ 38.0°C).",
+                clinicalMeaning: "Febrícula / Alza térmica leve (< 38°C)",
+                clinicianGuide: "Valide el síntoma expresado por la usuaria sin corregirla de forma impositiva. Pregunte: '¿Se ha tomado la temperatura con termómetro? ¿Desde cuándo siente este quebranto?' para descartar infección urinaria o corioamnionitis."
+            },
+            {
+                codes: ["VE", "CO"],
+                originLabel: "🇻🇪 Venezuela / 🇨🇴 Colombia",
+                term: "Dolor de bajito / Dolor en el vientre",
+                chileTerm: "Dolor hipogástrico / Dolor pélvico o contracciones",
+                note: "Molestia o cólico en la parte baja del abdomen (sobre el pubis). Puede corresponder a estiramiento de ligamentos o a contracciones uterinas.",
+                clinicalMeaning: "Algia pélvica / Dolor hipogástrico",
+                clinicianGuide: "Diferencie si es un dolor punzante lateral al caminar (ligamento redondo) o un endurecimiento rítmico del útero acompañado de dolor lumbar (dinámica uterina)."
+            },
+            {
+                codes: ["VE", "DO"],
+                originLabel: "🇻🇪 Venezuela / 🇩🇴 Rep. Dominicana",
+                term: "Manchar / Botar sangre de color",
+                chileTerm: "Metrorragia / Genitorragia o tapón mucoso",
+                note: "Cualquier pérdida de sangre roja o café por la vagina. En Chile siempre se evalúa en Urgencia Maternal para descartar placenta previa o desprendimiento.",
+                clinicalMeaning: "Genitorragia / Expulsión de tapón mucoso",
+                clinicianGuide: "Precise cantidad (gotas vs. flujo abundante), color (rosado/café mucoso vs. rojo vivo) y presencia de dolor. Si es rojo vivo, realice evaluación obstétrica inmediata."
+            },
+            {
+                codes: ["HT"],
+                originLabel: "🇭🇹 Haití (Kreyòl Ayisyen)",
+                term: "Pèdi dlo",
+                chileTerm: "Rotura de membranas / 'Romper bolsa'",
+                note: "Salida de líquido tibio y transparente por la vagina. En Chile se le dice 'romper la bolsa'. Debes ir de inmediato a Urgencia Maternal.",
+                clinicalMeaning: "Rotura Prematura de Membranas (RPM)",
+                clinicianGuide: "Evalúe de inmediato características del líquido (color, olor, cantidad y hora de inicio) mediante especuloscopía estéril y explique el procedimiento con pictogramas antes de examinar."
+            },
+            {
+                codes: ["HT"],
+                originLabel: "🇭🇹 Haití (Kreyòl Ayisyen)",
+                term: "Tranche / Vant fè mal",
+                chileTerm: "Contracciones uterinas / Entuertos",
+                note: "Dolor tipo cólico en el abdomen que viene y va. Durante el embarazo son contracciones; después del parto en Chile se llaman 'entuertos' (cuando el útero vuelve a su tamaño).",
+                clinicalMeaning: "Dinámica uterina / Contracciones puerperales",
+                clinicianGuide: "Pregunte frecuencia y duración ('Konbyen fwa vant ou vin di?'). En el puerperio, tranquilice explicando que los entuertos son normales y favorecen la retracción uterina."
+            },
+            {
+                codes: ["HT"],
+                originLabel: "🇭🇹 Haití (Kreyòl Ayisyen)",
+                term: "Bebe a pa bouje",
+                chileTerm: "Disminución de movimientos fetales (DMF)",
+                note: "Cuando sientes que tu bebé se mueve menos de lo habitual o lleva varias horas quieto. Es un signo de alerta para acudir a revisión.",
+                clinicalMeaning: "Disminución de Movimientos Fetales (DMF)",
+                clinicianGuide: "Priorice la atención. Realice auscultación de LCF y registro basal no estresante (RBNE) según edad gestacional, explicando cada paso en Kreyòl o con apoyo visual."
+            },
+            {
+                codes: ["HT"],
+                originLabel: "🇭🇹 Haití (Kreyòl Ayisyen)",
+                term: "Tèt vire / Vètij / Je nwa",
+                chileTerm: "Mareos / Lipotimia / Fotopsias",
+                note: "Sensación de que todo da vueltas, debilidad o ver luces/manchas oscuras. Puede ser baja de presión o señal de presión alta (preeclampsia).",
+                clinicalMeaning: "Mareos / Posible sintomatología neurovegetativa",
+                clinicianGuide: "Controle Presión Arterial de inmediato para descartar crisis hipertensiva o preeclampsia ('Je nwa' = escotomas/fotopsias) versus hipotensión ortostática o anemia."
+            },
+            {
+                codes: ["PE", "BO"],
+                originLabel: "🇵🇪 Perú / 🇧🇴 Bolivia",
+                term: "Tener sobreparto / Recaída",
+                chileTerm: "Complicación del puerperio (infección o ánimo)",
+                note: "En Perú y Bolivia se refiere a malestares físicos (fiebre, dolor) o tristeza profunda tras el parto por exponerse al frío o esfuerzo. En Chile requiere evaluación médica de puerperio.",
+                clinicalMeaning: "Morbilidad puerperal (Endometritis / Depresión postparto)",
+                clinicianGuide: "Acoja el concepto cultural sin desestimarlo. Evalúe involución uterina, loquios y fiebre (descartar endometritis) y aplique escala de Edimburgo para salud mental perinatal."
+            },
+            {
+                codes: ["PE", "BO", "EC"],
+                originLabel: "🇵🇪 Perú / 🇧🇴 Bolivia / 🇪🇨 Ecuador",
+                term: "La guagua / Wawa",
+                chileTerm: "El bebé / Recién nacido (RN)",
+                note: "Palabra de origen quechua compartida también en el sur de Chile para referirse con cariño al bebé o recién nacido.",
+                clinicalMeaning: "Feto / Recién Nacido",
+                clinicianGuide: "Término ampliamente comprendido en Chile; utilícelo para generar cercanía y vínculo terapéutico durante el control prenatal y apego."
+            },
+            {
+                codes: ["PE", "BO", "EC"],
+                originLabel: "🇵🇪 Perú / 🇧🇴 Bolivia / 🇪🇨 Ecuador",
+                term: "Dolor de cintura / Dolor de cadera",
+                chileTerm: "Lumbalgia gestacional / Contracciones de inicio",
+                note: "Dolor en la parte baja de la espalda que puede irradiarse hacia adelante. Si es rítmico y se endurece la panza, puede ser inicio de trabajo de parto.",
+                clinicalMeaning: "Lumbalgia / Pródromos de trabajo de parto",
+                clinicianGuide: "Evalúe si el dolor lumbar es mecánico postural o rítmico asociado a endurecimiento uterino y modificaciones cervicales."
+            },
+            {
+                codes: ["CO", "EC"],
+                originLabel: "🇨🇴 Colombia / 🇪🇨 Ecuador",
+                term: "Estar aventada / Tener gases o empacho",
+                chileTerm: "Distensión abdominal / Meteorismo",
+                note: "Sensación de barriga muy inflamada o llena de aire, muy frecuente en el embarazo por la digestión más lenta.",
+                clinicalMeaning: "Meteorismo / Distensión abdominal gestacional",
+                clinicianGuide: "Descarte signos de obstrucción o dolor epigástrico en barra (signo de alerta de preeclampsia severa) antes de atribuirlo solo a meteorismo fisiológico."
+            },
+            {
+                codes: ["CO", "VE", "PE", "EC", "DO"],
+                originLabel: "🇨🇴 Col / 🇻🇪 Ven / 🇵🇪 Per / 🇪🇨 Ecu / 🇩🇴 RD",
+                term: "Dar a luz / Alumbrar",
+                chileTerm: "Parto / Nacimiento",
+                note: "Nota cultural clave: En Chile, 'alumbramiento' NO significa el nacimiento del bebé, sino específicamente la expulsión de la placenta después de que nace el bebé.",
+                clinicalMeaning: "Trabajo de parto / Expulsivo",
+                clinicianGuide: "Aclare siempre la diferencia terminológica en el preparto para evitar confusiones cuando el equipo clínico hable de 'esperar el alumbramiento' tras el nacimiento."
+            },
+            {
+                codes: ["DO", "VE", "CO"],
+                originLabel: "🇩🇴 Rep. Dom. / 🇻🇪 Ven / 🇨🇴 Col",
+                term: "Tener pujo / Sentir pujo",
+                chileTerm: "Sensación de pujo / Tenesmo rectal",
+                note: "Ganas involuntarias de hacer fuerza hacia abajo, similar a querer ir al baño. Si ocurre antes de tiempo, debes avisar de inmediato a la matrona.",
+                clinicalMeaning: "Reflejo de pujo / Compresión fetal en piso pélvico",
+                clinicianGuide: "Si la gestante refiere 'pujo' en preparto o embarazo pretérmino, realice tacto vaginal inmediato para evaluar dilatación completa o descenso de presentación."
+            },
+            {
+                codes: ["EN"],
+                originLabel: "🌐 English (International)",
+                term: "Water broke / Leaking fluid",
+                chileTerm: "Rotura de membranas / 'Romper bolsa'",
+                note: "Loss of clear or warm amniotic fluid from the vagina. Go directly to the Maternity Emergency Room (Urgencia Maternal).",
+                clinicalMeaning: "Premature Rupture of Membranes (PROM)",
+                clinicianGuide: "Perform sterile speculoscopy to confirm amniotic fluid pooling, assess fetal heart rate, and determine gestational age management."
+            }
+        ];
+
+        function getDynamicEHRTemplates(weeks) {
+            const stage = getGestationalStageData(weeks);
+            return {
+                matrona: {
+                    label: "Control Prenatal Matrona",
+                    p1Lbl: "Altura Uterina (AU)",
+                    p1Val: stage.auEst,
+                    p2Lbl: "LCF / Mov. Fetales",
+                    p2Val: weeks >= 12 ? "146 lpm (+)" : "Emb. Precoz",
+                    notes: `SUBJETIVO: Gestante cursando ${weeks} semanas de gestación, refiere evolución fisiológica y buena tolerancia a suplementación. Sin cefalea, fotopsias, tinitus ni pérdida de flujo genital.\nOBJETIVO: Abdomen blando, depresible, útero grávido acorde a EG (${stage.auEst}). Sin edema en extremidades inferiores.\nPLAN: Mantener suplementación prenatal. Se solicita/revisa prestación clave de etapa: ${stage.shortExamLabel}.`
+                },
+                medico: {
+                    label: "Consulta Médica Obstétrica",
+                    p1Lbl: "Estudio Etapa",
+                    p1Val: stage.shortExamLabel,
+                    p2Lbl: "Riesgo Obstétrico",
+                    p2Val: "Bajo Riesgo",
+                    notes: `ANAMNESIS MÉDICA: Evaluación médica obstétrica a las ${weeks} semanas de gestación. Evolución acorde a edad gestacional.\nEXAMEN FÍSICO: Cardiopulmonar normal, hemodinamia estable.\nDIAGNÓSTICO Y CONDUCTA: Embarazo fisiológico de ${weeks} semanas. Continuar controles habituales con matrona en CESFAM y cumplir estudio: ${stage.shortExamLabel}.`
+                },
+                nutricion: {
+                    label: "Control Nutricional Gestante",
+                    p1Lbl: "IMC Gestacional",
+                    p1Val: "23.8 (Normal)",
+                    p2Lbl: "Trimestre",
+                    p2Val: stage.trimester.es,
+                    notes: `EVALUACIÓN NUTRICIONAL: Evaluación a las ${weeks} semanas (${stage.trimester.es}). Incremento ponderal adecuado según gráfica Atalah.\nANAMNESIS ALIMENTARIA: Consumo adecuado de proteínas y vegetales. Se adapta educación alimentaria a preparaciones culturales de su país de origen.\nINDICACIÓN: Retiro de 2 kg mensuales de bebida láctea Purita Mamá en bodega PNAC.`
+                },
+                urgencia: {
+                    label: "Urgencia Maternal / Triage",
+                    p1Lbl: "Dinámica Uterina",
+                    p1Val: "Negativa",
+                    p2Lbl: "Especuloscopía",
+                    p2Val: "Sin pérdida LA",
+                    notes: `MOTIVO DE CONSULTA: Evaluación de síntomas referidos por usuaria cursando ${weeks} semanas.\nEXAMEN OBSTÉTRICO: Útero en reposo, LCF 148 lpm reactivos. Sin sangrado genital ni hidrorrea.\nINDICACIÓN DE ALTA: Se explican signos de alarma (sangrado, pérdida de líquido, fiebre ≥ 38°C o disminución de movimientos fetales) mediante apoyo visual en box.`
+                }
+            };
+        }
+
+        const prepGuides = {
+            primera_cita: {
+                es: {
+                    title: "¿Qué debes traer a tu control prenatal?",
+                    alert: "🍽️ <strong>Alimentación:</strong> NO necesitas ayuno para este control. Desayuna normalmente y bebe agua antes de venir.",
+                    items: [
+                        "Cédula de identidad chilena, Pasaporte o DNI de tu país (vigente o vencido).",
+                        "Carnet Maternal / Agenda de Salud de la Gestante (si ya te lo entregaron).",
+                        "Exámenes de sangre o ecografías previas (de Chile o de tu país de origen).",
+                        "Lista o cajas de medicamentos/vitaminas que estés tomando actualmente.",
+                        "Llegar 15 minutos antes al SOME del CESFAM para confirmar tu asistencia."
+                    ],
+                    whatsapp: "Hola {NOMBRE} 👋, recordamos tu *Control Prenatal con Matrona* (Semana {SEMANAS}) este *24 Nov a las 10:00 hrs* en {CESFAM}.\n\n✅ *¿Qué debes traer?*\n• Documento de identidad o Pasaporte\n• Carnet Maternal y exámenes anteriores\n• Lista de medicamentos actuales\n• No requiere ayuno. Llega 15 min antes.\n\nResponde *SÍ* para confirmar tu hora."
+                },
+                ht: {
+                    title: "Kisa ou dwe pote nan randevou kontwòl gwosès ou?",
+                    alert: "🍽️ <strong>Manje:</strong> Ou PA bezwen rete ajen pou kontwòl sa a. Manje nòmalman anvan ou vini.",
+                    items: [
+                        "Kat idantite Chilyen, Paspò oswa pyès idantite peyi ou.",
+                        "Kanè Matènel / Ajanda Sante Fanm Ansent (si yo te deja ba ou li).",
+                        "Rezilta egzamen san oswa ekografi ou te fè anvan (nan Chili oswa lakay ou).",
+                        "Lis oswa bwat medikaman / vitamin w ap pran kounye a.",
+                        "Rive 15 minit anvan nan biwo SOME nan CESFAM lan."
+                    ],
+                    whatsapp: "Bonjou {NOMBRE} 👋, nou raple w *Kontwòl Prenatal ak Matwòn* (Semèn {SEMANAS}) dat *24 Novanm a 10:00 nan maten* nan {CESFAM}.\n\n✅ *Kisa pou w pote?*\n• Paspò oswa kat idantite\n• Kanè matènel ak egzamen anvan yo\n• Ou pa bezwen rete ajen. Rive 15 minit anvan.\n\nReponn *WI* pou konfime randevou a."
+                },
+                en: {
+                    title: "What should you bring to your prenatal visit?",
+                    alert: "🍽️ <strong>Food & Drink:</strong> NO fasting required for this checkup. Eat breakfast normally before coming.",
+                    items: [
+                        "Chilean ID card, Passport, or national ID from your home country.",
+                        "Maternal Health Booklet (Carnet Maternal) if already issued.",
+                        "Previous blood tests or ultrasounds (from Chile or your home country).",
+                        "List or packages of any medications/vitamins you currently take.",
+                        "Arrive 15 minutes early at the CESFAM reception desk (SOME)."
+                    ],
+                    whatsapp: "Hi {NOMBRE} 👋, reminder for your *Prenatal Checkup with Midwife* (Week {SEMANAS}) on *Nov 24 at 10:00 AM* at {CESFAM}.\n\n✅ *What to bring:*\n• ID Card or Passport\n• Maternal Booklet & prior lab results\n• No fasting required. Arrive 15 mins early.\n\nReply *YES* to confirm."
+                }
+            },
+            ptgo_glucosa: {
+                es: {
+                    title: "Preparación Examen PTGO (Prueba Tolerancia a la Glucosa)",
+                    alert: "⚠️ <strong>AYUNO ESTRICTO OBLIGATORIO:</strong> Debes venir en ayunas de <strong>8 a 12 horas</strong> (no comer nada, ni chicles, ni café; solo puedes tomar agua pura).",
+                    items: [
+                        "Cumplir entre 8 y 12 horas exactas de ayuno antes de las 08:00 AM.",
+                        "Traer la Orden Médica impresa o descargada desde tu Portal del Paciente.",
+                        "Disponer de 2 horas y media de tiempo libre (te tomarán 2 muestras de sangre separadas por 2 horas).",
+                        "Traer una colación saludable (sándwich o fruta) para comer INMEDIATAMENTE después de la segunda muestra.",
+                        "No fumar ni hacer ejercicio intenso 24 horas antes del examen."
+                    ],
+                    whatsapp: "Hola {NOMBRE} 👋, preparación obligatoria para tu *Examen de Glucosa (PTGO)* (Semana {SEMANAS}) mañana a las *07:45 hrs* en {CESFAM}:\n\n⚠️ *Indicaciones clave:*\n• *Ayuno estricto de 8 a 12 horas* (solo agua pura)\n• Traer orden médica y cédula/pasaporte\n• Tendrás que esperar 2 horas en el laboratorio\n• Trae comida para después del examen.\n\nResponde *SÍ* para confirmar."
+                },
+                ht: {
+                    title: "Preparasyon pou Egzamen Sik (PTGO - Tolerans Glikoz)",
+                    alert: "⚠️ <strong>RETE AJEN OBLIGATWA:</strong> Ou dwe vini san manje pandan <strong>8 a 12 èdtan</strong> (pa manje anyen, pa bwè kafe; ou ka bwè dlo sèlman).",
+                    items: [
+                        "Rete san manje pandan 8 a 12 èdtan anvan 08:00 nan maten.",
+                        "Pote Lòd Egzamen an (ou ka telechaje li nan Pòtay Pasyan an).",
+                        "Prepare w pou pase 2 èdtan edmi nan laboratwa a (y ap pran san 2 fwa).",
+                        "Pote yon ti manje pou w manje MENM MOMAN apre dezyèm priz san an.",
+                        "Pa fè gwo efò fizik 24 èdtan anvan egzamen an."
+                    ],
+                    whatsapp: "Bonjou {NOMBRE} 👋, preparasyon obligatwa pou *Egzamen Sik (PTGO)* (Semèn {SEMANAS}) demen a *07:45 nan maten* nan {CESFAM}:\n\n⚠️ *Enpòtan:*\n• *Rete ajen pandan 8 a 12 èdtan* (dlo sèlman)\n• Pote lòd egzamen ak paspò/kat idantite\n• Pote manje pou apre egzamen an.\n\nReponn *WI* pou konfime."
+                },
+                en: {
+                    title: "Preparation for Oral Glucose Tolerance Test (OGTT / PTGO)",
+                    alert: "⚠️ <strong>STRICT FASTING REQUIRED:</strong> Fast for <strong>8 to 12 hours</strong> prior (no food, gum, or coffee; plain water only).",
+                    items: [
+                        "Complete 8 to 12 hours of fasting before 08:00 AM.",
+                        "Bring your Lab Order (printed or downloaded from your Patient Portal).",
+                        "Plan to stay at the lab for 2.5 hours (2 blood draws, 2 hours apart).",
+                        "Bring a snack to eat IMMEDIATELY after the second blood draw.",
+                        "Avoid vigorous exercise 24 hours before the test."
+                    ],
+                    whatsapp: "Hi {NOMBRE} 👋, mandatory preparation for your *Glucose Test (PTGO)* (Week {SEMANAS}) tomorrow at *07:45 AM* at {CESFAM}:\n\n⚠️ *Key Instructions:*\n• *Strict 8-12 hour fast* (plain water only)\n• Bring lab order & ID/Passport\n• Bring a snack for after the test.\n\nReply *YES* to confirm."
+                }
+            },
+            ecografia: {
+                es: {
+                    title: "Preparación para Ecografía Obstétrica / Morfológica",
+                    alert: "🧴 <strong>Cuidado de la piel:</strong> NO apliques cremas hidratantes ni aceites en tu abdomen el día del examen (interfieren con el gel del ecógrafo).",
+                    items: [
+                        "No aplicar cremas, aceites ni lociones en la pancita desde la noche anterior.",
+                        "Usar ropa cómoda de dos piezas (blusa y pantalón/falda) para descubrir fácilmente el abdomen.",
+                        "No requiere ayuno; puedes comer normalmente.",
+                        "Traer orden de ecografía e informes de ecografías anteriores.",
+                        "Puedes asistir con 1 acompañante adulto si el box lo permite."
+                    ],
+                    whatsapp: "Hola {NOMBRE} 👋, guía de preparación para tu *Ecografía Obstétrica* (Semana {SEMANAS}):\n\n✅ *Checklist rápido:*\n• *No usar cremas ni aceites* en el abdomen ese día\n• Ropa cómoda de 2 piezas\n• No requiere ayuno\n• Traer orden médica y ecografías previas.\n\nResponde *SÍ* para confirmar."
+                },
+                ht: {
+                    title: "Preparasyon pou Ekografi Obstetrik",
+                    alert: "🧴 <strong>Swen po:</strong> PA mete krèm ni lwil sou vant ou jou egzamen an (sa anpeche aparèy la wè tibebe a byen).",
+                    items: [
+                        "Pa mete krèm oswa lwil sou vant ou depi jou anvan an.",
+                        "Mete rad ki konfòtab (de pyès) pou w ka dekouvri vant ou fasil.",
+                        "Ou pa bezwen rete ajen; ou ka manje nòmalman.",
+                        "Pote lòd ekografi a ak rezilta ekografi ou te fè anvan yo.",
+                        "Ou ka vini ak 1 granmoun ki akonpaye w."
+                    ],
+                    whatsapp: "Bonjou {NOMBRE} 👋, preparasyon pou *Ekografi Obstetrik* ou a (Semèn {SEMANAS}):\n\n✅ *Lis verifikasyon:*\n• *Pa mete krèm ni lwil* sou vant ou jou sa a\n• Rad konfòtab 2 pyès\n• Ou pa bezwen rete ajen\n• Pote lòd ekografi a.\n\nReponn *WI* pou konfime."
+                },
+                en: {
+                    title: "Preparation for Obstetric Ultrasound",
+                    alert: "🧴 <strong>Skin Prep:</strong> DO NOT apply lotions, creams, or oils on your belly on the day of the ultrasound.",
+                    items: [
+                        "Avoid applying creams or oils on your abdomen starting the night before.",
+                        "Wear comfortable two-piece clothing for easy abdominal access.",
+                        "No fasting required; eat normally.",
+                        "Bring your ultrasound referral and any previous scan reports.",
+                        "You may bring 1 adult companion."
+                    ],
+                    whatsapp: "Hi {NOMBRE} 👋, preparation checklist for your *Obstetric Ultrasound* (Week {SEMANAS}):\n\n✅ *Checklist:*\n• *No creams or oils* on your belly that day\n• Comfortable 2-piece outfit\n• No fasting needed\n• Bring referral & prior scans.\n\nReply *YES* to confirm."
+                }
+            },
+            laboratorio: {
+                es: {
+                    title: "Checklist Exámenes de Sangre, Orina y Cultivos",
+                    alert: "🧪 <strong>Ayuno y muestra de orina:</strong> Para exámenes de sangre/orina requiere <strong>8 horas de ayuno</strong> y primera orina de la mañana en frasco estéril.",
+                    items: [
+                        "Ayuno de 8 horas (solo puedes beber agua natural).",
+                        "Recolectar el segundo chorro de la primera orina de la mañana en frasco de farmacia/CESFAM.",
+                        "Asear la zona genital solo con agua antes de tomar la muestra de orina.",
+                        "Traer orden de laboratorio y documento de identidad.",
+                        "Si estás entre semanas 35 y 37, recuerda realizar también el cultivo de Estreptococo Grupo B."
+                    ],
+                    whatsapp: "Hola {NOMBRE} 👋, recordatorio para tus *Exámenes de Laboratorio Prenatal* (Semana {SEMANAS}) en {CESFAM}:\n\n✅ *Preparación:*\n• *8 horas de ayuno* (solo agua)\n• Traer primera orina de la mañana en frasco estéril\n• Traer orden médica y documento de identidad.\n\nResponde *SÍ* para confirmar."
+                },
+                ht: {
+                    title: "Lis Verifikasyon Egzamen San ak Pipi",
+                    alert: "🧪 <strong>Rete ajen ak pipi:</strong> Ou dwe rete <strong>8 èdtan san manje</strong> epi pote premye pipi maten an nan yon ti boutèy esteril.",
+                    items: [
+                        "Rete 8 èdtan san manje (ou ka bwè dlo sèlman).",
+                        "Pran premye pipi maten an nan ti boutèy CESFAM lan (kite premye ti jè a pase).",
+                        "Lave pati entim ou ak dlo sèlman anvan ou pran pipi a.",
+                        "Pote lòd egzamen an ak kat idantite / paspò ou.",
+                        "Evite manje ki gen anpil grès jou swa anvan an."
+                    ],
+                    whatsapp: "Bonjou {NOMBRE} 👋, rapèl pou *Egzamen San ak Pipi* ou yo (Semèn {SEMANAS}) nan {CESFAM}:\n\n✅ *Preparasyon:*\n• *8 èdtan san manje* (dlo sèlman)\n• Pote premye pipi maten an nan ti boutèy esteril\n• Pote lòd egzamen ak kat idantite.\n\nReponn *WI* pou konfime."
+                },
+                en: {
+                    title: "Blood, Urine & Swab Lab Tests Checklist",
+                    alert: "🧪 <strong>Fasting & Urine Sample:</strong> Requires <strong>8 hours of fasting</strong> and bringing a mid-stream first morning urine sample.",
+                    items: [
+                        "Fast for 8 hours (plain water is allowed).",
+                        "Collect mid-stream first morning urine in a sterile container.",
+                        "Wash genital area with water only before collecting urine.",
+                        "Bring lab order and ID/Passport.",
+                        "If between weeks 35–37, complete Group B Strep (GBS) screening."
+                    ],
+                    whatsapp: "Hi {NOMBRE} 👋, reminder for your *Prenatal Lab Tests* (Week {SEMANAS}) at {CESFAM}:\n\n✅ *Preparation:*\n• *8-hour fast* (water only)\n• Bring first morning urine in sterile cup\n• Bring lab order & ID.\n\nReply *YES* to confirm."
+                }
+            }
+        };
+
+        function switchView(viewName) {
+            document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-buttons .btn-nav').forEach(b => b.classList.remove('active'));
+
+            document.getElementById('view-' + viewName).classList.add('active');
+            document.getElementById('nav-btn-' + viewName).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchGestanteTab(tabName) {
+            document.querySelectorAll('.sub-tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById('panel-' + tabName).classList.add('active');
+            document.getElementById('tab-btn-' + tabName).classList.add('active');
+
+            if (tabName === 'preparacion') {
+                renderPreparationGuide();
+            } else if (tabName === 'diccionario') {
+                renderDictionary();
+            }
+        }
+
+        function switchProfMode(mode) {
+            document.querySelectorAll('.prof-sub-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.prof-mode-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById('prof-panel-' + mode).classList.add('active');
+            document.getElementById('prof-mode-' + mode).classList.add('active');
+        }
+
+        function filterDictionary(countryCode, btnEl) {
+            activeDictFilter = countryCode;
+            if (btnEl) {
+                document.querySelectorAll('.dict-chip').forEach(c => c.classList.remove('active'));
+                btnEl.classList.add('active');
+            }
+            renderDictionary();
+        }
+
+        function renderDictionary() {
+            const container = document.getElementById('dictionary-list-container');
+            const query = (document.getElementById('dict-search-input')?.value || '').toLowerCase().trim();
+
+            const filtered = interculturalDictionary.filter(entry => {
+                const matchesCountry = activeDictFilter === 'ALL' || entry.codes.includes(activeDictFilter);
+                const matchesQuery = !query ||
+                    entry.term.toLowerCase().includes(query) ||
+                    entry.chileTerm.toLowerCase().includes(query) ||
+                    entry.note.toLowerCase().includes(query) ||
+                    entry.originLabel.toLowerCase().includes(query);
+                return matchesCountry && matchesQuery;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding: 1.5rem;">No se encontraron términos con ese filtro. Prueba buscando otra palabra o selecciona "Todos los países".</p>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div class="dict-card">
+                    <div>
+                        <span class="origin-pill">${item.originLabel}</span>
+                        <p style="font-weight: 700; font-size: 1.05rem;">"${item.term}"</p>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.72rem; color: var(--primary); font-weight: 700; display: block;">EN CHILE SE DICE</span>
+                        <p style="font-weight: 700; font-size: 1.02rem; color: var(--primary-dark);">${item.chileTerm}</p>
+                    </div>
+                    <div style="font-size: 0.88rem; color: var(--text-muted);">
+                        ${item.note}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleProfCountryChange() {
+            const country = document.getElementById('prof-country-select').value;
+            const chipsContainer = document.getElementById('prof-quick-chips');
+            const matching = interculturalDictionary.filter(item => item.codes.includes(country));
+
+            chipsContainer.innerHTML = matching.map((item, idx) => `
+                <button type="button" class="quick-term-chip ${idx === 0 ? 'active' : ''}" onclick="selectQuickProfTerm('${item.term}', this)">
+                    "${item.term}"
+                </button>
+            `).join('');
+
+            if (matching.length > 0) {
+                document.getElementById('prof-term-input').value = matching[0].term;
+                displayClinicianResult(matching[0], country);
+            }
+        }
+
+        function selectQuickProfTerm(termText, btnEl) {
+            document.querySelectorAll('.quick-term-chip').forEach(c => c.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+            document.getElementById('prof-term-input').value = termText;
+            searchClinicianTerm();
+        }
+
+        function searchClinicianTerm() {
+            const country = document.getElementById('prof-country-select').value;
+            const query = document.getElementById('prof-term-input').value.toLowerCase().trim();
+
+            let match = interculturalDictionary.find(item =>
+                item.codes.includes(country) && item.term.toLowerCase().includes(query)
+            );
+            if (!match) {
+                match = interculturalDictionary.find(item =>
+                    item.term.toLowerCase().includes(query) || item.chileTerm.toLowerCase().includes(query)
+                );
+            }
+
+            if (match) {
+                displayClinicianResult(match, country);
+            } else {
+                document.getElementById('clin-origin-label').textContent = `Consulta libre (${country})`;
+                document.getElementById('clin-term-title').textContent = `"${document.getElementById('prof-term-input').value}"`;
+                document.getElementById('clin-real-meaning').textContent = "Expresión coloquial / Síntoma referido por usuaria";
+                document.getElementById('clin-chile-equiv').textContent = "Explorar contexto semiológico y cronología";
+                document.getElementById('clin-guide-text').textContent = "Pida a la gestante que señale en su cuerpo o describa con ejemplos cotidianos la sensación, intensidad y duración del síntoma, apoyándose en las láminas visuales.";
+            }
+        }
+
+        function displayClinicianResult(item, selectedCountryCode) {
+            const countryNames = {
+                VE: "Venezuela", HT: "Haití - Kreyòl", CO: "Colombia",
+                PE: "Perú", BO: "Bolivia", EC: "Ecuador", DO: "Rep. Dominicana"
+            };
+            document.getElementById('clin-origin-label').textContent = `Expresión referida por la usuaria (${countryNames[selectedCountryCode] || item.originLabel})`;
+            document.getElementById('clin-term-title').textContent = `"${item.term}"`;
+            document.getElementById('clin-real-meaning').textContent = item.clinicalMeaning;
+            document.getElementById('clin-chile-equiv').textContent = item.chileTerm;
+            document.getElementById('clin-guide-text').textContent = item.clinicianGuide;
+        }
+
+        function applyEHRTemplate(tplKey, btnEl) {
+            activeTemplateKey = tplKey;
+            if (btnEl) {
+                document.querySelectorAll('.tpl-chip').forEach(c => c.classList.remove('active'));
+                btnEl.classList.add('active');
+            }
+            const weeks = activeGestanteUser ? activeGestanteUser.weeks : 24;
+            const templates = getDynamicEHRTemplates(weeks);
+            const tpl = templates[tplKey] || templates.matrona;
+            activeSpecialtyLabel = tpl.label;
+
+            document.getElementById('ehr-param1-lbl').textContent = tpl.p1Lbl;
+            document.getElementById('ehr-param1').value = tpl.p1Val;
+            document.getElementById('ehr-param2-lbl').textContent = tpl.p2Lbl;
+            document.getElementById('ehr-param2').value = tpl.p2Val;
+            document.getElementById('ehr-notes').value = tpl.notes;
+
+            const stage = getGestationalStageData(weeks);
+            const attContainer = document.getElementById('ehr-dynamic-attachments');
+            if (attContainer) {
+                attContainer.innerHTML = stage.docs.map(d => `
+                    <div style="border: 1px solid var(--border-neutral); border-radius: 8px; padding: 0.7rem; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <strong style="font-size: 0.84rem; display: block;">${d.title}</strong>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">${d.sub}</span>
+                        </div>
+                        <button class="btn-sm-outline" onclick="openDynamicAttachmentModal('${d.title.replace(/'/g, "")}', '${d.sub.replace(/'/g, "")}')">Ver</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function openDynamicAttachmentModal(titleText, subText) {
+            const modal = document.getElementById('info-modal');
+            const weeks = activeGestanteUser ? activeGestanteUser.weeks : 24;
+            document.getElementById('modal-title').textContent = `📎 Prestación Clínica (EG ${weeks} semanas)`;
+            document.getElementById('modal-content').innerHTML = `
+                <p><strong>Prestación / Orden:</strong> ${titleText}</p>
+                <p style="margin-top:0.4rem;"><strong>Detalle:</strong> ${subText}</p>
+                <p style="margin-top:0.65rem; background: var(--bg-tint); padding: 0.7rem; border-radius: 8px; font-size: 0.86rem;">
+                    Esta orden está sincronizada automáticamente con el perfil de la gestante según su semana ${weeks} de embarazo.
+                </p>
+            `;
+            modal.classList.add('open');
+        }
+
+        function saveEHREvolution(e) {
+            e.preventDefault();
+            const pa = document.getElementById('ehr-pa').value;
+            const peso = document.getElementById('ehr-peso').value;
+            const p1Lbl = document.getElementById('ehr-param1-lbl').textContent;
+            const p1Val = document.getElementById('ehr-param1').value;
+            const p2Lbl = document.getElementById('ehr-param2-lbl').textContent;
+            const p2Val = document.getElementById('ehr-param2').value;
+            const notes = document.getElementById('ehr-notes').value;
+            const syncPortal = document.getElementById('ehr-sync-portal').checked;
+
+            const signerName = activeProfUser ? `${activeProfUser.name} (${activeProfUser.role})` : "Mat. Javiera Soto";
+            const patientName = activeGestanteUser ? activeGestanteUser.name : "Camila Mendoza";
+            const egText = activeGestanteUser ? `${activeGestanteUser.weeks} sem` : "24 sem";
+
+            const timeline = document.getElementById('ehr-timeline-list');
+            const entry = document.createElement('div');
+            entry.className = 'timeline-entry';
+            entry.innerHTML = `
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem;">
+                    <strong style="font-size: 0.9rem; color: var(--primary-dark);">${activeSpecialtyLabel} • EG ${egText}</strong>
+                    <span style="font-size: 0.78rem; color: #15803d; font-weight: 700;">19 Nov 2026 • Firmado: ${signerName}</span>
+                </div>
+                <p style="font-size: 0.78rem; color: var(--primary); font-weight: 700; margin-top: 0.15rem;">
+                    PA: ${pa} | Peso: ${peso} | ${p1Lbl}: ${p1Val} | ${p2Lbl}: ${p2Val}
+                </p>
+                <p style="font-size: 0.84rem; color: var(--text-dark); margin-top: 0.25rem; white-space: pre-line;">${notes}</p>
+            `;
+            timeline.prepend(entry);
+
+            const modal = document.getElementById('info-modal');
+            document.getElementById('modal-title').textContent = "✅ Evolución Firmada y Registrada";
+            document.getElementById('modal-content').innerHTML = `
+                <p>La evolución de <strong>${activeSpecialtyLabel}</strong> fue firmada electrónicamente por <strong>${signerName}</strong> y guardada en la ficha de <strong>${patientName}</strong> (EG: ${egText}).</p>
+                ${syncPortal ? '<div style="background:#dcfce7; color:#15803d; padding:0.75rem; border-radius:8px; margin-top:0.75rem; font-size:0.86rem;">📲 <strong>Sincronizado:</strong> El resumen comprensible ya está disponible en el Portal de la Gestante.</div>' : ''}
+            `;
+            modal.classList.add('open');
+        }
+
+        function selectCountry(code, lang, label, btnElement) {
+            document.querySelectorAll('.flag-btn').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+            document.getElementById('active-lang-badge').textContent = 'Idioma: ' + label;
+
+            currentLang = lang;
+            const t = translations[lang] || translations.es;
+
+            document.getElementById('txt-select-country').textContent = t.selectCountry;
+            document.getElementById('tab-btn-embarazo').textContent = t.tabEmbarazo;
+            document.getElementById('tab-btn-preparacion').textContent = t.tabPreparacion;
+            document.getElementById('tab-btn-portal').textContent = t.tabPortal;
+            document.getElementById('tab-btn-diccionario').textContent = t.tabDiccionario;
+            document.getElementById('tab-btn-sistema').textContent = t.tabSistema;
+            document.getElementById('txt-week-label').textContent = t.weekLabel;
+            document.getElementById('txt-fetal-badge').textContent = t.fetalBadge;
+            document.getElementById('txt-selfcare-title').textContent = t.selfcareTitle;
+            document.getElementById('txt-exam-title').textContent = t.examTitle;
+            document.getElementById('txt-notes-title').textContent = t.notesTitle;
+            document.getElementById('txt-control-matrona').textContent = t.controlMatrona;
+            document.getElementById('txt-pnac').textContent = t.pnac;
+            document.getElementById('txt-pnac-status').textContent = t.pnacStatus;
+
+            document.getElementById('txt-prep-select-lbl').textContent = t.prepSelectLbl;
+            document.getElementById('txt-auto-msg-title').textContent = t.autoMsgTitle;
+            document.getElementById('txt-auto-msg-sub').textContent = t.autoMsgSub;
+            document.getElementById('btn-send-wsp-direct').textContent = t.btnSendWspDirect;
+            document.getElementById('btn-copy-reminder').textContent = t.btnCopyReminder;
+            document.getElementById('txt-tip-reagendar').textContent = t.tipReagendar;
+            document.getElementById('txt-tip-reagendar-desc').textContent = t.tipReagendarDesc;
+
+            document.getElementById('txt-docs-heading').textContent = t.docsHeading;
+            document.getElementById('txt-docs-sub').textContent = t.docsSub;
+            document.getElementById('txt-history-heading').textContent = t.historyHeading;
+            document.getElementById('txt-history-sub').textContent = t.historySub;
+
+            const chipButtons = document.querySelectorAll('#dict-country-chips .dict-chip');
+            chipButtons.forEach(c => c.classList.remove('active'));
+            const matchingChip = Array.from(chipButtons).find(c => c.getAttribute('onclick').includes(`'${code}'`));
+            if (matchingChip) {
+                matchingChip.classList.add('active');
+                activeDictFilter = code;
+            } else {
+                chipButtons[0]?.classList.add('active');
+                activeDictFilter = 'ALL';
+            }
+
+            refreshGestationalContent();
+            renderDictionary();
+        }
+
+        function buildFormattedWhatsAppMessage(prepType, langCode) {
+            const guideData = prepGuides[prepType][langCode] || prepGuides[prepType].es;
+            const firstName = activeGestanteUser ? activeGestanteUser.name.split(' ')[0] : 'Camila';
+            const cesfamName = activeGestanteUser ? activeGestanteUser.cesfam : 'CESFAM Dr. Alberto Hurtado';
+            const weeks = activeGestanteUser ? activeGestanteUser.weeks : 24;
+
+            return guideData.whatsapp
+                .replace(/{NOMBRE}/g, firstName)
+                .replace(/{CESFAM}/g, cesfamName)
+                .replace(/{SEMANAS}/g, weeks);
+        }
+
+        function renderPreparationGuide() {
+            const type = document.getElementById('appointment-type-select').value;
+            const guideData = prepGuides[type][currentLang] || prepGuides[type].es;
+            const formattedWhatsapp = buildFormattedWhatsAppMessage(type, currentLang);
+
+            document.getElementById('prep-guide-title').textContent = guideData.title;
+            document.getElementById('prep-alert-box').innerHTML = guideData.alert;
+            document.getElementById('whatsapp-message-text').textContent = formattedWhatsapp;
+
+            const listContainer = document.getElementById('checklist-items-list');
+            listContainer.innerHTML = '';
+
+            guideData.items.forEach(itemText => {
+                const label = document.createElement('label');
+                label.className = 'checklist-item';
+                label.innerHTML = `
+                    <input type="checkbox" onchange="toggleChecklistItem(this)">
+                    <span class="item-text" style="font-size: 0.9rem;">${itemText}</span>
+                `;
+                listContainer.appendChild(label);
+            });
+
+            updateChecklistProgress();
+        }
+
+        function toggleChecklistItem(checkbox) {
+            const parent = checkbox.closest('.checklist-item');
+            if (checkbox.checked) {
+                parent.classList.add('checked');
+            } else {
+                parent.classList.remove('checked');
+            }
+            updateChecklistProgress();
+        }
+
+        function updateChecklistProgress() {
+            const checkboxes = document.querySelectorAll('#checklist-items-list input[type="checkbox"]');
+            const total = checkboxes.length;
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+            document.getElementById('checklist-counter').textContent = `${checkedCount}/${total} listos`;
+            const pct = total > 0 ? Math.round((checkedCount / total) * 100) : 0;
+            document.getElementById('checklist-progress-bar').style.width = pct + '%';
+        }
+
+        function copyReminderMessage() {
+            const text = document.getElementById('whatsapp-message-text').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('btn-copy-reminder');
+                const originalText = btn.textContent;
+                btn.textContent = "✅ ¡Texto copiado!";
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2500);
+            });
+        }
+
+        // MODAL RÁPIDO PARA COLOCAR EL TELÉFONO Y ENVIAR WHATSAPP
+        function openClinicianPrepModal() {
+            const modal = document.getElementById('info-modal');
+            const countrySelect = document.getElementById('prof-country-select');
+            const country = countrySelect ? countrySelect.value : 'VE';
+            const defaultLang = country === 'HT' ? 'ht' : 'es';
+            const patientPhone = activeGestanteUser && activeGestanteUser.phone ? activeGestanteUser.phone : '';
+
+            document.getElementById('modal-title').textContent = "📲 Enviar Recordatorio por WhatsApp";
+            document.getElementById('modal-content').innerHTML = `
+                <div class="form-group">
+                    <label for="modal-wsp-phone" style="color: #065f46; font-size: 0.92rem; font-weight: 800;">
+                        📱 Coloca el número de teléfono (WhatsApp):
+                    </label>
+                    <input type="tel" id="modal-wsp-phone" class="input-light" style="border: 2px solid #16a34a; font-size: 1.05rem; font-weight: 700;" value="${patientPhone}" placeholder="Ej: +56 9 8765 4321" required>
+                </div>
+                <div class="auth-grid-2">
+                    <div class="form-group">
+                        <label>🌐 Idioma del mensaje:</label>
+                        <select id="modal-wsp-lang" class="input-light" onchange="updateClinicianModalPreview()">
+                            <option value="es" ${defaultLang === 'es' ? 'selected' : ''}>Español (Adaptado)</option>
+                            <option value="ht" ${defaultLang === 'ht' ? 'selected' : ''}>🇭🇹 Kreyòl Ayisyen</option>
+                            <option value="en">🌐 English</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>📅 Cita / Examen:</label>
+                        <select id="modal-prep-select" class="input-light" onchange="updateClinicianModalPreview()">
+                            <option value="primera_cita">Control Prenatal con Matrona</option>
+                            <option value="ptgo_glucosa">Prueba Tolerancia Glucosa (PTGO)</option>
+                            <option value="ecografia">Ecografía Obstétrica</option>
+                            <option value="laboratorio">Exámenes de Sangre y Orina</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="whatsapp-preview-box" style="padding: 0.9rem; margin-bottom: 1rem;">
+                    <span style="font-size: 0.78rem; font-weight: 700;">Vista previa del mensaje:</span>
+                    <div id="modal-wsp-preview" class="whatsapp-bubble" style="margin: 0.4rem 0 0;"></div>
+                </div>
+                <button class="btn-wsp-send" onclick="sendClinicianWhatsAppNow()">📲 Abrir WhatsApp y Enviar Mensaje</button>
+            `;
+            modal.classList.add('open');
+            updateClinicianModalPreview();
+            setTimeout(() => document.getElementById('modal-wsp-phone')?.focus(), 100);
+        }
+
+        function updateClinicianModalPreview() {
+            const prepVal = document.getElementById('modal-prep-select').value;
+            const langVal = document.getElementById('modal-wsp-lang').value;
+            const msg = buildFormattedWhatsAppMessage(prepVal, langVal);
+            document.getElementById('modal-wsp-preview').textContent = msg;
+        }
+
+        function sendClinicianWhatsAppNow() {
+            const phone = document.getElementById('modal-wsp-phone').value.trim();
+            const msg = document.getElementById('modal-wsp-preview').textContent;
+            if (phone) {
+                syncPhoneInputs(phone);
+            }
+            launchWhatsApp(phone, msg);
+        }
+
+        function downloadClinicalDoc(type, customTitle) {
+            const pName = activeGestanteUser ? activeGestanteUser.name : 'Camila Mendoza';
+            const pWeeks = activeGestanteUser ? activeGestanteUser.weeks : 24;
+            const pCesfam = activeGestanteUser ? activeGestanteUser.cesfam : 'CESFAM Dr. Alberto Hurtado';
+
+            const filename = `${type}_EG_${pWeeks}_sem.txt`;
+            const content = `MINISTERIO DE SALUD - CHILE | ${pCesfam.toUpperCase()}\n=================================================================\nDOCUMENTO CLÍNICO / ORDEN PRENATAL\nPaciente: ${pName}\nEdad Gestacional Actual: ${pWeeks} Semanas\nPrestación: ${customTitle || type}\n\nEste documento ha sido generado dinámicamente según la edad gestacional registrada por la usuaria.\nPresentar en SOME / Toma de Muestras / Farmacia del establecimiento.`;
+
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function openVisitSummary(id) {
+            const modal = document.getElementById('info-modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+
+            if (id === 1) {
+                title.textContent = "Resumen Control Prenatal con Matrona";
+                content.innerHTML = `
+                    <p><strong>Profesional:</strong> Matrona Javiera Soto</p>
+                    <p><strong>Signos Vitales:</strong> Presión Arterial 110/70 mmHg | Peso: 64.5 kg</p>
+                    <p><strong>Evaluación Obstétrica:</strong> Latidos cardíacos fetales (LCF) presentes y normales (148 lpm).</p>
+                    <hr style="margin: 0.75rem 0; border: 0; border-top: 1px solid #e2e8f0;">
+                    <p><strong>Indicaciones entregadas:</strong> Continuar suplementación prenatal y realizar exámenes correspondientes a la edad gestacional actual.</p>
+                `;
+            } else if (id === 2) {
+                title.textContent = "Ecografía Obstétrica de Control";
+                content.innerHTML = `
+                    <p><strong>Establecimiento:</strong> Unidad de Medicina Materno Fetal - Hospital Base</p>
+                    <p><strong>Resultado:</strong> Feto único vivo. Biometría acorde a edad gestacional. Anatomía fetal evaluada sin hallazgos patológicos. Líquido amniótico normal.</p>
+                `;
+            } else {
+                title.textContent = "Control Nutricional y Chile Crece Contigo";
+                content.innerHTML = `
+                    <p><strong>Profesional:</strong> Nutricionista Carolina Pérez</p>
+                    <p><strong>Plan Alimentario:</strong> Incremento de peso adecuado. Se entrega beneficio de bebida láctea <em>Purita Mamá</em> y guía educativa de alimentación saludable en el embarazo.</p>
+                `;
+            }
+            modal.classList.add('open');
+        }
+
+        function openVisualModal() {
+            const modal = document.getElementById('info-modal');
+            document.getElementById('modal-title').textContent = "🖼️ Lámina Visual de Box: Semáforo de Alerta";
+            document.getElementById('modal-content').innerHTML = `
+                <div style="background:#dcfce7; padding:0.75rem; border-radius:8px; margin-bottom:0.6rem;">
+                    <strong>🟢 NORMAL (&lt; 37.4°C):</strong> Temperatura habitual. Mantener hidratación.
+                </div>
+                <div style="background:#fef3c7; padding:0.75rem; border-radius:8px; margin-bottom:0.6rem;">
+                    <strong>🟡 FEBRÍCULA / "QUEBRANTO" (37.5°C - 37.9°C):</strong> Controlar temperatura cada 2 horas, reposar y avisar en control.
+                </div>
+                <div style="background:#fee2e2; padding:0.75rem; border-radius:8px;">
+                    <strong>🔴 FIEBRE / ALARMA (≥ 38.0°C):</strong> Acudir inmediatamente a Urgencia Maternal.
+                </div>
+            `;
+            modal.classList.add('open');
+        }
+
+        function closeModal(e) {
+            if (e.target.id === 'info-modal') {
+                document.getElementById('info-modal').classList.remove('open');
+            }
+        }
+
+        // Inicializar componentes y restaurar sesiones guardadas al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            getStoredGestantes();
+            getStoredProfs();
+
+            const savedG = localStorage.getItem(SESSION_GESTANTE_KEY);
+            if (savedG) {
+                setActiveGestanteSession(JSON.parse(savedG));
+            } else {
+                refreshGestationalContent();
+                renderDictionary();
+            }
+
+            const savedP = localStorage.getItem(SESSION_PROF_KEY);
+            if (savedP) {
+                setActiveProfSession(JSON.parse(savedP));
+            }
+
+            applyEHRTemplate('matrona');
+            handleProfCountryChange();
+        });
+    </script>
+</body>
+</html>
